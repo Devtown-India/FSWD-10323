@@ -9,24 +9,41 @@
     <style>
         * {
             margin: 0;
-            padding: 0px;
+            padding: 0;
             box-sizing: border-box;
         }
         
-        body {
-            height: 100vh;
+        div.parent {
             background-color: black;
+            height: 100vh;
+            width: 700px;
+            padding: 10px;
+            display: flex;
+            flex-wrap: wrap;
         }
         
-        div {
-            height: 80%;
-            background-color: orange;
+        div.child {
+            flex-shrink: 0;
+            background-color: black;
+            height: 200px;
+            width: 150px;
+            background-color: #ffbf00;
+            margin: 0px 10px;
         }
     </style>
 </head>
 
 <body>
-    <div></div>
+    <div class="parent">
+        <div class="child"></div>
+        <div class="child"></div>
+        <div class="child"></div>
+        <div class="child"></div>
+        <div class="child"></div>
+        <div class="child"></div>
+
+    </div>
+
 </body>
 
 </html>
