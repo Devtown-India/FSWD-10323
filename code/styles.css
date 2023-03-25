@@ -50,3 +50,37 @@
       color: black;
       margin-top: 24px;
   }
+  
+  div.container form {
+      margin-top: 24px;
+      height: 109px;
+      display: flex;
+      flex-direction: column;
+      justify-content: space-around;
+  }
+  
+  div.container form input {
+      outline: none;
+      padding: 8px 12px;
+      height: 32px;
+      border-radius: 5px;
+      border: 1px solid rgb(209 213 219);
+      font-size: 14px;
+  }
+  
+  div.container form input:focus {
+      border-color: purple;
+  }
+  
+  div.container form div.pass {
+      display: flex;
+      align-items: center;
+  }
+  
+  div.container form div.pass input {
+      flex-grow: 1;
+  }
+  
+  div.container form div.pass svg {
+      margin-left: 10px;
+  }
