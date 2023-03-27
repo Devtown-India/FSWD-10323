@@ -1,86 +1,28 @@
-  * {
-      margin: 0;
-      padding: 0;
-      box-sizing: border-box;
-  }
-  
-  body {
-      background: hsla(210, 90%, 80%, 1);
-      background: linear-gradient(90deg, hsla(210, 90%, 80%, 1) 0%, hsla(212, 93%, 49%, 1) 100%);
-      height: 100vh;
-      filter: progid: DXImageTransform.Microsoft.gradient( startColorstr="#9FCCFA", endColorstr="#0974F1", GradientType=1);
-      display: flex;
-      justify-content: center;
-      align-items: center;
-  }
-  
-  div.container {
-      width: 432px;
-      height: 535px;
-      border-radius: 8px;
-      padding: 40px;
-      background-color: #fff;
-      box-shadow: rgba(0, 0, 0, 0.35) 0px 5px 15px;
-      font-family: 'Roboto', sans-serif;
-  }
-  
-  div.container header {
-      text-align: center;
-  }
-  
-  img.logo {
-      width: 48px;
-      margin: 0px auto;
-  }
-  
-  div.container h2.title {
-      font-weight: 700;
-      font-size: 34px;
-      color: black;
-      margin-top: 24px;
-  }
-  
-  div.container h2.title span {
-      color: #6422CD;
-  }
-  
-  div.container div.login-message {
-      font-weight: 400;
-      font-size: 18px;
-      color: black;
-      margin-top: 24px;
-  }
-  
-  div.container form {
-      margin-top: 24px;
-      height: 109px;
-      display: flex;
-      flex-direction: column;
-      justify-content: space-around;
-  }
-  
-  div.container form input {
-      outline: none;
-      padding: 8px 12px;
-      height: 32px;
-      border-radius: 5px;
-      border: 1px solid rgb(209 213 219);
-      font-size: 14px;
-  }
-  
-  div.container form input:focus {
-      border-color: purple;
-  }
-  
-  div.container form div.pass {
-      display: flex;
-      align-items: center;
-  }
-  
-  div.container form div.pass input {
-      flex-grow: 1;
-  }
-  
-  div.container form div.pass svg {
-      margin-left: 10px;
-  }
+    body {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        height: 100vh;
+    }
+    
+    div {
+        height: 200px;
+        width: 200px;
+        background-color: orange;
+        animation-name: play;
+        animation-duration: 1s;
+        animation-fill-mode: forwards;
+        animation-iteration-count: infinite;
+        animation-direction: alternate;
+        animation-timing-function: cubic-bezier(0.075, 0.82, 0.165, 1);
+    }
+    
+    @keyframes play {
+        from {
+            transform: scale(1);
+        }
+        to {
+            transform: scale(1.5);
+            border-radius: 20px;
+        }
+    }
