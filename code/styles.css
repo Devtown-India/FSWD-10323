@@ -1,28 +1,13 @@
-    body {
-        display: flex;
-        align-items: center;
-        justify-content: center;
-        height: 100vh;
-    }
-    
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: Roboto;
+}
+
+@media(min-width: 768px) {
     div {
-        height: 200px;
-        width: 200px;
-        background-color: orange;
-        animation-name: play;
-        animation-duration: 1s;
-        animation-fill-mode: forwards;
-        animation-iteration-count: infinite;
-        animation-direction: alternate;
-        animation-timing-function: cubic-bezier(0.075, 0.82, 0.165, 1);
+        height: 300px;
+        background: orange;
     }
-    
-    @keyframes play {
-        from {
-            transform: scale(1);
-        }
-        to {
-            transform: scale(1.5);
-            border-radius: 20px;
-        }
-    }
+}
