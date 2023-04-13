@@ -6,16 +6,46 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Javascript Practice</title>
+    <script defer src="./script.js"></script>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            transition: 1s ease;
+            height: 100vh;
+        }
+        
+        body.dark {
+            background-color: black;
+            color: white;
+        }
+        
+        body.light {
+            background-color: white;
+            color: black;
+        }
+        
+        progress {
+            width: 80%;
+            display: block;
+            margin: 0px auto;
+            position: fixed;
+            top: 0;
+            transition: 1s ease all;
+        }
+    </style>
 </head>
 
-<body>
-    <h1>Ecmascript</h1>
+<body class="">
+    <h1>Todo list</h1>
+    <h2> <input type="text"><button>Add</button></h2>
     <ul>
-        <li>Arrow functions</li>
-        <li>function default params</li>
-        <li>template strings</li>
+
     </ul>
-    <script src="./script.js"></script>
 </body>
 
 </html>

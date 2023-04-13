@@ -1,28 +1,54 @@
-// const a = [1,2,3,4]
-// const b = [5,6,7,8]
-// /*
-// [1,2,3,4]
-//  1, 2, 3, 4
-// */
+/*
+const todo = [{
+    text: string,
+    completed: boolean | false,
+    id: string
+}]
+*/
 
-// const c = [...a,b]
+const todoContainer = document.querySelector('ul');
+const input = document.querySelector('input');
+const button = document.querySelector('button');
 
-const a = {
-    name: 'John',
-    age: 30,
-    car:{
-        brand: 'BMW',
-        model: 'X5'
+const todos = []
+
+const renderList = ()=>{
+    todoContainer.innerHTML = ''
+    todos.forEach((todo)=>{
+        const li = document.createElement('li')
+        const button = document.createElement('button')
+        button.addEventListener('click',(e)=>{
+            li.remove()
+            const id = todo.id
+            const index = todos.findIndex((todo)=>todo.id===id)
+            todos.splice(index,1)
+        })
+
+        button.innerHTML = 'delete'
+        li.innerHTML = `
+        ${todo.text} 
+        `
+        li.appendChild(button)
+        todoContainer.appendChild(li)
+    })
+
+    console.log(todos)
+}
+
+const handleAdd = (e)=>{
+    const itemToAdd = input.value
+    if(itemToAdd!==null && itemToAdd!==''){
+        todos.push({
+            text: itemToAdd,
+            completed: false,
+            id: Date.now()
+        })
+        renderList()
+        return 
+    }else{
+       return window.alert('adding an empty item is not possible')
     }
 }
 
-const b ={
-    ...a,
-}
+button.addEventListener('click',handleAdd)
 
-a.name = 'Jack'
-a.age = 18
-a.car.brand = 'Mercedes'
-a.car.model = 'C300D'
-
-console.log(b)
