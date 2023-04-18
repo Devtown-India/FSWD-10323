@@ -37,6 +37,7 @@
             border: 5px solid black;
             border-radius: 50%;
             box-shadow: rgba(0, 0, 0, 0.35) 0px 5px 15px;
+            transition: 0.5s ease-in-out;
         }
         
         div.options .option#scissor {
@@ -55,11 +56,15 @@
         div.scoreboard {
             width: 150px;
             height: 80px;
-            background-color: crimson;
             border-radius: 10px;
             display: flex;
             align-items: center;
             justify-content: space-evenly;
+            background: hsla(258, 100%, 68%, 1);
+            background: linear-gradient(45deg, hsla(258, 100%, 68%, 1) 0%, hsla(219, 98%, 49%, 1) 100%);
+            background: -moz-linear-gradient(45deg, hsla(258, 100%, 68%, 1) 0%, hsla(219, 98%, 49%, 1) 100%);
+            background: -webkit-linear-gradient(45deg, hsla(258, 100%, 68%, 1) 0%, hsla(219, 98%, 49%, 1) 100%);
+            filter: progid: DXImageTransform.Microsoft.gradient( startColorstr="#8d5cff", endColorstr="#0258f7", GradientType=1);
         }
         
         #player,
@@ -71,7 +76,8 @@
             position: absolute;
             height: 30px;
             width: 100px;
-            background-color: orange;
+            background-color: #111;
+            opacity: 0.8;
             display: flex;
             align-items: center;
             justify-content: center;
@@ -85,7 +91,8 @@
             position: absolute;
             height: 30px;
             width: 100px;
-            background-color: orange;
+            background-color: #111;
+            opacity: 0.8;
             display: flex;
             align-items: center;
             justify-content: center;
@@ -99,6 +106,14 @@
             width: 5px;
             height: 100%;
             background-color: #fff;
+        }
+        
+        .win {
+            border: 5px solid lime !important;
+        }
+        
+        .lose {
+            border: 5px solid crimson !important;
         }
     </style>
 </head>
@@ -122,7 +137,7 @@
             </div>
         </div>
 
-        <div class="text my-5">
+        <div id="message-box" class=" my-5">
             <h1 class="text-2xl font-bold tracking-tight text-gray-900 sm:text-3xl">Rock beats scissor you win</h1>
         </div>
 
