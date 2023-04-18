@@ -15,38 +15,130 @@
             box-sizing: border-box;
         }
         
-        body {
-            background-color: #111;
+        div.game {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            flex-direction: column;
+            height: 500px
+        }
+        
+        div.options {
+            display: flex;
+            align-items: center;
+            justify-content: space-evenly;
+        }
+        
+        div.options .option {
+            width: 100px;
+            background-color: #FAE8E0;
+            margin: 0px 30px;
+            padding: 10px;
+            border: 5px solid black;
+            border-radius: 50%;
+            box-shadow: rgba(0, 0, 0, 0.35) 0px 5px 15px;
+        }
+        
+        div.options .option#scissor {
+            transform: rotate(-90deg) rotateY(180deg);
+        }
+        
+        div.options .option:hover {
+            cursor: pointer;
+            box-shadow: rgba(50, 50, 93, 0.25) 0px 30px 60px -12px inset, rgba(0, 0, 0, 0.3) 0px 18px 36px -18px inset;
+        }
+        
+        div.options .option img {
+            width: 100%;
+        }
+        
+        div.scoreboard {
+            width: 150px;
+            height: 80px;
+            background-color: crimson;
+            border-radius: 10px;
+            display: flex;
+            align-items: center;
+            justify-content: space-evenly;
+        }
+        
+        #player,
+        #computer {
+            position: relative;
+        }
+        
+        #player div {
+            position: absolute;
+            height: 30px;
+            width: 100px;
+            background-color: orange;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            border-radius: 5px;
+            left: -110px;
+            top: 5px;
+            padding: 0px 10px;
+        }
+        
+        #computer div {
+            position: absolute;
+            height: 30px;
+            width: 100px;
+            background-color: orange;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            border-radius: 5px;
+            top: 5px;
+            right: -110px;
+            padding: 0px 10px;
+        }
+        
+        div.partition {
+            width: 5px;
+            height: 100%;
+            background-color: #fff;
         }
     </style>
 </head>
 
 <body class="">
 
-    <body class="antialiased bg-slate-200 text-slate-700 mx-2">
-        <div class="max-w-lg mx-auto my-10 bg-white p-8 rounded-xl shadow shadow-slate-300">
-            <div class="flex flex-col justify-between items-center">
-                <div>
-                    <h1 class="text-3xl font-medium">Todo list</h1>
-                </div>
-                <div class="relative w-full my-3">
-                    <input type="search" id="add-todo" class="block p-4 pl-10 w-full text-sm text-gray-900 bg-gray-50 rounded-lg border border-gray-300 focus:ring-blue-500 focus:border-blue-500 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
-                        placeholder="Add item to your todo list" required>
-                    <button type="submit" id="add-todo-btn" class="text-white absolute right-2.5 bottom-2.5 bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm px-4 py-2 dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800">Add</button>
-                </div>
+    <div class="game">
+        <div class="scoreboard">
+            <div id="player">
+                <h1 class="text-3xl text-white">
+                    0
+                </h1>
+                <div class="text-lg text-white">Player</div>
             </div>
-
-            <p class="text-slate-500">Hello, here are your latest </p>
-            <div id="todo-container">
-
+            <div class="partition"></div>
+            <div id="computer">
+                <h1 class="text-3xl text-white">
+                    0
+                </h1>
+                <div class="text-lg text-white">Computer</div>
             </div>
-
-            <p class="text-xs text-slate-500 text-center">Last updated
-                <span id="last-updated"></span>
-            </p>
         </div>
 
-    </body>
+        <div class="text my-5">
+            <h1 class="text-2xl font-bold tracking-tight text-gray-900 sm:text-3xl">Rock beats scissor you win</h1>
+        </div>
+
+        <div class="options">
+            <div id="rock" class="option">
+                <img src="https://www.svgrepo.com/show/323925/rock.svg" alt="rock option">
+            </div>
+            <div id="paper" class="option">
+                <img src="https://www.svgrepo.com/show/479042/palm.svg" alt="paper option">
+            </div>
+            <div id="scissor" class="option">
+                <img src="https://www.svgrepo.com/show/455978/peace.svg" alt="scissor option">
+            </div>
+        </div>
+
+    </div>
 </body>
 
 </html>
