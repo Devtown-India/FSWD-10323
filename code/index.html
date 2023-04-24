@@ -2,158 +2,16 @@
 <html lang="en">
 
 <head>
-    <meta charset="UTF-8" />
-    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Javascript Practice</title>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
     <script defer src="./script.js"></script>
-    <script src="https://cdn.tailwindcss.com"></script>
-    <style>
-        * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
-        }
-        
-        div.game {
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            flex-direction: column;
-            height: 500px
-        }
-        
-        div.options {
-            display: flex;
-            align-items: center;
-            justify-content: space-evenly;
-        }
-        
-        div.options .option {
-            width: 100px;
-            background-color: #FAE8E0;
-            margin: 0px 30px;
-            padding: 10px;
-            border: 5px solid black;
-            border-radius: 50%;
-            box-shadow: rgba(0, 0, 0, 0.35) 0px 5px 15px;
-            transition: 0.5s ease-in-out;
-        }
-        
-        div.options .option#scissor {
-            transform: rotate(-90deg) rotateY(180deg);
-        }
-        
-        div.options .option:hover {
-            cursor: pointer;
-            box-shadow: rgba(50, 50, 93, 0.25) 0px 30px 60px -12px inset, rgba(0, 0, 0, 0.3) 0px 18px 36px -18px inset;
-        }
-        
-        div.options .option img {
-            width: 100%;
-        }
-        
-        div.scoreboard {
-            width: 150px;
-            height: 80px;
-            border-radius: 10px;
-            display: flex;
-            align-items: center;
-            justify-content: space-evenly;
-            background: hsla(258, 100%, 68%, 1);
-            background: linear-gradient(45deg, hsla(258, 100%, 68%, 1) 0%, hsla(219, 98%, 49%, 1) 100%);
-            background: -moz-linear-gradient(45deg, hsla(258, 100%, 68%, 1) 0%, hsla(219, 98%, 49%, 1) 100%);
-            background: -webkit-linear-gradient(45deg, hsla(258, 100%, 68%, 1) 0%, hsla(219, 98%, 49%, 1) 100%);
-            filter: progid: DXImageTransform.Microsoft.gradient( startColorstr="#8d5cff", endColorstr="#0258f7", GradientType=1);
-        }
-        
-        #player,
-        #computer {
-            position: relative;
-        }
-        
-        #player div {
-            position: absolute;
-            height: 30px;
-            width: 100px;
-            background-color: #111;
-            opacity: 0.8;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            border-radius: 5px;
-            left: -110px;
-            top: 5px;
-            padding: 0px 10px;
-        }
-        
-        #computer div {
-            position: absolute;
-            height: 30px;
-            width: 100px;
-            background-color: #111;
-            opacity: 0.8;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            border-radius: 5px;
-            top: 5px;
-            right: -110px;
-            padding: 0px 10px;
-        }
-        
-        div.partition {
-            width: 5px;
-            height: 100%;
-            background-color: #fff;
-        }
-        
-        .win {
-            border: 5px solid lime !important;
-        }
-        
-        .lose {
-            border: 5px solid crimson !important;
-        }
-    </style>
 </head>
 
-<body class="">
-
-    <div class="game">
-        <div class="scoreboard">
-            <div id="player">
-                <h1 class="text-3xl text-white">
-                    0
-                </h1>
-                <div class="text-lg text-white">Player</div>
-            </div>
-            <div class="partition"></div>
-            <div id="computer">
-                <h1 class="text-3xl text-white">
-                    0
-                </h1>
-                <div class="text-lg text-white">Computer</div>
-            </div>
-        </div>
-
-        <div id="message-box" class=" my-5">
-            <h1 class="text-2xl font-bold tracking-tight text-gray-900 sm:text-3xl">Rock beats scissor you win</h1>
-        </div>
-
-        <div class="options">
-            <div id="rock" class="option">
-                <img src="https://www.svgrepo.com/show/323925/rock.svg" alt="rock option">
-            </div>
-            <div id="paper" class="option">
-                <img src="https://www.svgrepo.com/show/479042/palm.svg" alt="paper option">
-            </div>
-            <div id="scissor" class="option">
-                <img src="https://www.svgrepo.com/show/455978/peace.svg" alt="scissor option">
-            </div>
-        </div>
-
-    </div>
+<body>
+    <input type="text"><button>search</button>
+    <ul></ul>
 </body>
 
 </html>
