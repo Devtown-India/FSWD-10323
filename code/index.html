@@ -7,6 +7,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Javascript Practice</title>
     <script defer src="./script.js"></script>
+    <link rel="stylesheet" href="./styles.css">
     <script src="https://cdn.tailwindcss.com"></script>
     <style>
         * {
@@ -31,21 +32,21 @@
                 </div>
                 <div class="relative w-full my-3">
                     <input type="search" id="add-todo" class="block p-4 pl-10 w-full text-sm text-gray-900 bg-gray-50 rounded-lg border border-gray-300 focus:ring-blue-500 focus:border-blue-500 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
-                        placeholder="Add item to your todo list" required>
-                    <button type="submit" id="add-todo-btn" class="text-white absolute right-2.5 bottom-2.5 bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm px-4 py-2 dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800">Add</button>
+                        placeholder="Add item to your todo list" required />
+                    <button type="submit" id="add-todo-btn" class="text-white absolute right-2.5 bottom-2.5 bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm px-4 py-2 dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800">
+              Add
+            </button>
                 </div>
             </div>
 
-            <p class="text-slate-500">Hello, here are your latest </p>
-            <div id="todo-container">
+            <p class="text-slate-500">Hello, here are your latest list</p>
+            <div id="todo-container"></div>
 
-            </div>
-
-            <p class="text-xs text-slate-500 text-center">Last updated
+            <p class="text-xs text-slate-500 text-center">
+                Last updated
                 <span id="last-updated"></span>
             </p>
         </div>
-
     </body>
 </body>
 
