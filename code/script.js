@@ -8,6 +8,7 @@ let lastUpdated = new Date().toLocaleString();
 
 lastUpdatedContainer.innerHTML = lastUpdated;
 
+
 const listItemComplete = (todo_text="")=>` <div id="task" class="flex justify-between items-center border-b border-slate-200 py-3 px-2 border-l-4  border-l-transparent">
                     <div class="inline-flex items-center space-x-2">
                     <!--tick button-->
@@ -73,6 +74,10 @@ const initialize = ()=>{
 
 initialize()
 
+const updateData = setInterval(()=>{
+    const stringified = JSON.stringify(todos);
+    localStorage.setItem(key, stringified);
+}, 1000)
 
 
 const showEdit = (id) => {
@@ -99,7 +104,7 @@ function renderList (){
     removeButton.addEventListener('click',() =>{
       todoElement.remove();
       todos.splice(todos.indexOf(todo),1)
-      updateTodosInStorage(todos)
+    //   updateTodosInStorage(todos)
     })
     const tickButton = todoElement.querySelector(".tick-button")
     tickButton.addEventListener('click',() =>{
@@ -116,7 +121,7 @@ function renderList (){
         console.log("false")
 
       }
-      updateTodosInStorage(todos)
+    //   updateTodosInStorage(todos)
     })
   });
 };
@@ -129,7 +134,7 @@ const handleAdd = (e) => {
       completed: false,
       id: Date.now(),
     });
-    updateTodosInStorage(todos)
+    // updateTodosInStorage(todos)
     input.value = "";
     renderList();
     console.log(todos)
