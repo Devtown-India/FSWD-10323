@@ -1,24 +1,4 @@
 const key = 'todos';
-
-let todos;
-
-const initialize = ()=>{
-    // 1. check if there's data in local storage 
-    // 2. if there is, load it
-    // 3. if there isn't, create an empty array and we'll use that array plus we'll add the array into local storage
-    const data = localStorage.getItem(key);
-    if(!data) {
-        todos = [];
-        return;
-    }else{
-        todos = JSON.parse(data);
-        return;
-    }
-}
-
-initialize()
-
-
 const todoContainer = document.querySelector("#todo-container");
 const input = document.querySelector("#add-todo");
 const addbutton = document.querySelector("#add-todo-btn");
@@ -67,6 +47,34 @@ const listItemIncomplete = (todo_text="")=>`<div id="task" class="flex justify-b
 
 
 let idOfElementToEdit = null;
+
+let todos;
+
+
+const updateTodosInStorage = (todoList)=>{
+    const stringified = JSON.stringify(todoList);
+    localStorage.setItem(key, stringified);
+}
+
+const initialize = ()=>{
+    // 1. check if there's data in local storage 
+    // 2. if there is, load it
+    // 3. if there isn't, create an empty array and we'll use that array plus we'll add the array into local storage
+    const data = localStorage.getItem(key);
+    if(!data) {
+        todos = [];
+        return;
+    }else{
+        todos = JSON.parse(data);
+        renderList(todos)
+        return;
+    }
+}
+
+initialize()
+
+
+
 const showEdit = (id) => {
   const element = todos.find((todo) => todo.id === id);
   input.value = element.text;
@@ -77,7 +85,7 @@ const showEdit = (id) => {
 
 
 
-const renderList = () => {
+function renderList (){
   todoContainer.innerHTML = "";
   todos.forEach((todo) => {
     const todoElement = document.createElement("div");
@@ -91,7 +99,7 @@ const renderList = () => {
     removeButton.addEventListener('click',() =>{
       todoElement.remove();
       todos.splice(todos.indexOf(todo),1)
-
+      updateTodosInStorage(todos)
     })
     const tickButton = todoElement.querySelector(".tick-button")
     tickButton.addEventListener('click',() =>{
@@ -108,11 +116,9 @@ const renderList = () => {
         console.log("false")
 
       }
-
+      updateTodosInStorage(todos)
     })
-    
   });
-  
 };
 
 const handleAdd = (e) => {
@@ -123,6 +129,7 @@ const handleAdd = (e) => {
       completed: false,
       id: Date.now(),
     });
+    updateTodosInStorage(todos)
     input.value = "";
     renderList();
     console.log(todos)
