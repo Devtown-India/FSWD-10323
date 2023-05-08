@@ -1,6 +1,3 @@
-const fs = require('fs');
+const math = require('./math')
 
-const text = 'this is text'
-
-const data = fs.readFileSync('temp.txt')
-console.log(data.toString())
+console.log(math.add(1, 2,22,45,23,45,67,89,90,100))
