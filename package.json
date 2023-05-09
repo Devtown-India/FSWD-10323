@@ -19,6 +19,8 @@
   "homepage": "https://github.com/ShapeAI/FSWD-10323#readme",
   "dependencies": {
     "node-fetch": "^2.6.11",
+    "uninstall": "0.0.0",
     "uuid": "^9.0.0"
-  }
+  },
+  "devDependencies": {}
 }

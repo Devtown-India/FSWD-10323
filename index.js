@@ -1,20 +1,16 @@
-const { v4: uuidv4 } = require('uuid');
-const fetch = require('node-fetch')
+const http = require('http');
+const fs = require('fs');
 
-const id = uuidv4(); 
-console.log(id)
+const PORT = 8080
 
-const fetchData = async()=>{
-    try {
-        const res = await fetch('https://jsonplaceholder.typicode.com/posts')
-        const data = await res.json()
-        console.log(data)
-    } catch (error) {
-        console.log(error)
-    }
-}
-
-
-fetchData()
-
-// console.log(fetch)
+http.createServer(async function (req, res) {
+    await new Promise((resolve, reject) => {
+        fs.readFile('index.html', function(err, data) {
+            if(err) reject(err);
+        res.writeHead(200, {'Content-Type': 'text/html'});
+        res.write(data);
+        res.end();
+        resolve();
+    });
+    })
+}).listen(PORT); 
