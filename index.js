@@ -5,13 +5,21 @@ const PORT = 8081;
 
 const app = express();
 
+const logUserAgent = (req,res,next)=>{
+    const agent = req.headers['user-agent']
+    console.log(agent)
+    next()
+}
+
+app.use(logUserAgent)
+
 app.get("/", (req, res) => {
   res.status(200).send("First response from express  !!");
 });
 
 app.get('/product/:name', (req, res) => {
-    console.log(req.params)
-    res.status(200).send(`My name is ${username}`);
+    const {name} = req.params
+    res.status(200).send(`My name is ${name}`);
 })
 
 
