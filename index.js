@@ -11,7 +11,13 @@ const logUserAgent = (req,res,next)=>{
     next()
 }
 
+const logger = (req,res,next)=>{
+    console.log(`Request method: ${req.method} and request path: ${req.path}`)
+    next()
+}
+
 app.use(logUserAgent)
+app.use(logger)
 
 app.get("/", (req, res) => {
   res.status(200).send("First response from express  !!");
