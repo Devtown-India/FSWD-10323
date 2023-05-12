@@ -7,7 +7,7 @@ const app = express();
 
 const logUserAgent = (req,res,next)=>{
     const agent = req.headers['user-agent']
-    console.log(agent)
+    if(agent.includes('Chrome'))return res.status(403).send("Unauthorised")
     next()
 }
 
@@ -21,7 +21,6 @@ app.get('/product/:name', (req, res) => {
     const {name} = req.params
     res.status(200).send(`My name is ${name}`);
 })
-
 
 app.get("/todos", (req, res) => {
   const { count } = req.query;
