@@ -11,6 +11,7 @@ const logger = (req, res, next) => {
 };
 
 app.use(logger);
+app.use(express.json());
 
 app.get("/ping", (req, res) => {
   res.status(200).send("PONG");
@@ -27,18 +28,10 @@ app.get("/ping", (req, res) => {
 
 app.get("/todos", async (req, res) => {
   try {
-    fs.readFile("./db.json", "utf-8", (err, data) => {
-      if (err) {
-        console.log(err);
-        return res.status(500).json({
-          message: "Internal Server Error",
-          data: null,
-        });
-      }
-      return res.status(200).json({
-        message: "Successfully fetched the todos",
-        data: JSON.parse(data),
-      });
+    const data = await fs.promises.readFile("./db.json", "utf-8");
+    return res.status(200).json({
+      message: "Successfully fetched the todos",
+      data: JSON.parse(data),
     });
   } catch (error) {
     return res.status(500).json({
@@ -49,12 +42,20 @@ app.get("/todos", async (req, res) => {
 });
 
 // create an endpoint to add a todo
-app.post('/todos',async (req,res)=>{
-  console.log(req.body)
-  return res.json(req.body)
+app.post("/todos", async (req, res) => {
+  console.log(req.body);
+  const { title } = req.body;
+  const todo = {
+    title: title,
+    isComplete: false,
+  };
+  const data = await fs.promises.readFile("./db.json", "utf-8");
+  const parsedData = JSON.parse(data);
+  parsedData.push(todo);
+  await fs.promises.writeFile("./db.json", JSON.stringify(parsedData));
+  return res.json(req.body);
   // const {isComplete,title} = req.body;
-
-})
+});
 
 app.listen(PORT, () => {
   console.log(`Server is running on port ${PORT}`);
