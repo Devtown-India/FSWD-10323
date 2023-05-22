@@ -81,11 +81,11 @@ app.delete('/todos/:id', async (req, res) => {
       const filteredData = parsedData.filter((todo) => todo.id !== id);
       await fs.promises.writeFile("./db.json", JSON.stringify(filteredData));
       return res.status(200).json({
-        message:"Todod deleted successfully",
+        message:"Todo deleted successfully",
         data: filteredData
       })
     }
-     return res.status(500).json({
+     return res.status(400).json({
       message: "Todo with this id does not exist",
       data: null,
     });
@@ -97,7 +97,41 @@ app.delete('/todos/:id', async (req, res) => {
   }
 })
 
-
+// create an endpoint to update a todo
+app.patch('/todos/:id', async (req, res) => {
+  try {
+    const { id } = req.params;
+    const { title, isComplete } = req.body;
+     const parsedData = JSON.parse(data);
+    const todo = parsedData.find((todo) => todo.id === id);
+    if(title && title === '') return res.status(400).json({
+      message: "Todo title can not be empty",
+      data: null,
+    });
+    if(todo){
+      // delete the todo from array
+      todo={
+        ...todo,
+        title: title || todo.title,
+        isComplete: isComplete || todo.isComplete
+      }
+      await fs.promises.writeFile("./db.json", JSON.stringify(parsedData));
+      return res.status(200).json({
+        message:"Todo deleted successfully",
+        data: parsedData
+      })
+    }
+     return res.status(400).json({
+      message: "Todo with this id does not exist",
+      data: null,
+    });
+  } catch (error) {
+    return res.status(500).json({
+      message: "Internal Server Error",
+      data: null,
+    });
+  }
+})
 app.listen(PORT, () => {
   console.log(`Server is running on port ${PORT}`);
 });
