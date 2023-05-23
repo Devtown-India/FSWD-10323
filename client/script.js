@@ -57,10 +57,12 @@ const updateTodosInStorage = (todoList)=>{
     localStorage.setItem(key, stringified);
 }
 
-const initialize = ()=>{
+const initialize = async ()=>{
     // 1. check if there's data in local storage 
     // 2. if there is, load it
     // 3. if there isn't, create an empty array and we'll use that array plus we'll add the array into local storage
+    const res = await axios.get('https://51a5-2405-201-5804-11a3-248e-b753-d3b5-4e6d.ngrok-free.app/todos')
+    console.log(res)
     const data = localStorage.getItem(key);
     if(!data) {
         todos = [];
