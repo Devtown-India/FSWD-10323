@@ -1,6 +1,7 @@
 const express = require("express");
 const fs = require("fs");
 const uuid = require("uuid");
+const cors = require('cors')
 
 const PORT = 8081;
 
@@ -10,7 +11,7 @@ const logger = (req, res, next) => {
   console.log(`Request method: ${req.method} and request path: ${req.path}`);
   next();
 };
-
+app.use(cors())
 app.use(logger);
 app.use(express.json());
 
@@ -61,6 +62,7 @@ app.post("/todos", async (req, res) => {
       data: parsedData,
     });
   } catch (error) {
+    console.log(error )
     return res.status(500).json({
       message: "Internal Server Error",
       data: null,
