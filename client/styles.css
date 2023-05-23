@@ -1,0 +1,13 @@
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: Roboto;
+}
+
+@media (min-width: 768px) {
+    div {
+        height: 300px;
+        background: orange;
+    }
+}
