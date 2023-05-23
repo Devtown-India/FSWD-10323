@@ -63,17 +63,15 @@ const initialize = async () => {
   // 2. if there is, load it
   // 3. if there isn't, create an empty array and we'll use that array plus we'll add the array into local storage
   try {
-    const res = await axios.get(
-      "http://localhost:8081/todos"
-    );
+    const res = await axios.get("http://localhost:8081/todos");
     const { data: todosFromServer } = res.data;
     console.log(todosFromServer);
 
     if (!todosFromServer || todosFromServer.length === 0) {
-      todos=[]
+      todos = [];
       return;
     } else {
-      todos=todosFromServer
+      todos = todosFromServer;
       renderList();
       return;
     }
@@ -131,21 +129,29 @@ function renderList() {
   });
 }
 
-const handleAdd = (e) => {
-  const itemToAdd = input.value;
-  if (itemToAdd !== null && itemToAdd !== "") {
-    todos.push({
-      text: itemToAdd,
-      isComplete: false,
-      id: Date.now(),
-    });
-    // updateTodosInStorage(todos)
-    input.value = "";
-    renderList();
-    console.log(todos);
-    return;
-  } else {
-    return window.alert("adding an empty item is not possible");
+const handleAdd = async (e) => {
+  try {
+    const itemToAdd = input.value;
+    if (itemToAdd !== null && itemToAdd !== "") {
+      const res = await axios.post("http://localhost:8081/todos", {
+        title: itemToAdd,
+      });
+      console.log(res);
+      todos.push({
+        title: itemToAdd,
+        isComplete: false,
+        id: Date.now(),
+      });
+      // updateTodosInStorage(todos)
+      input.value = "";
+      renderList();
+      console.log(todos);
+      return;
+    } else {
+      return window.alert("adding an empty item is not possible");
+    }
+  } catch (error) {
+    console.log(error);
   }
 };
 
