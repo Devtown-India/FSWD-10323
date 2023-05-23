@@ -1,4 +1,4 @@
-const key = 'todos';
+const key = "todos";
 const todoContainer = document.querySelector("#todo-container");
 const input = document.querySelector("#add-todo");
 const addbutton = document.querySelector("#add-todo-btn");
@@ -8,8 +8,9 @@ let lastUpdated = new Date().toLocaleString();
 
 lastUpdatedContainer.innerHTML = lastUpdated;
 
-
-const listItemComplete = (todo_text="")=>` <div id="task" class="flex justify-between items-center border-b border-slate-200 py-3 px-2 border-l-4  border-l-transparent">
+const listItemComplete = (
+  todo_text = ""
+) => ` <div id="task" class="flex justify-between items-center border-b border-slate-200 py-3 px-2 border-l-4  border-l-transparent">
                     <div class="inline-flex items-center space-x-2">
                     <!--tick button-->
                         <div class="tick-button">
@@ -25,9 +26,11 @@ const listItemComplete = (todo_text="")=>` <div id="task" class="flex justify-be
                         <path stroke-linecap="round" stroke-linejoin="round" d="M14.74 9l-.346 9m-4.788 0L9.26 9m9.968-3.21c.342.052.682.107 1.022.166m-1.022-.165L18.16 19.673a2.25 2.25 0 01-2.244 2.077H8.084a2.25 2.25 0 01-2.244-2.077L4.772 5.79m14.456 0a48.108 48.108 0 00-3.478-.397m-12 .562c.34-.059.68-.114 1.022-.165m0 0a48.11 48.11 0 013.478-.397m7.5 0v-.916c0-1.18-.91-2.164-2.09-2.201a51.964 51.964 0 00-3.32 0c-1.18.037-2.09 1.022-2.09 2.201v.916m7.5 0a48.667 48.667 0 00-7.5 0" />
                       </svg>
                     </div>
-                </div>`
+                </div>`;
 
-const listItemIncomplete = (todo_text="")=>`<div id="task" class="flex justify-between items-center border-b border-slate-200 py-3 px-2 border-l-4  border-l-transparent bg-gradient-to-r from-transparent to-transparent hover:from-slate-100 transition ease-linear duration-150">
+const listItemIncomplete = (
+  todo_text = ""
+) => `<div id="task" class="flex justify-between items-center border-b border-slate-200 py-3 px-2 border-l-4  border-l-transparent bg-gradient-to-r from-transparent to-transparent hover:from-slate-100 transition ease-linear duration-150">
                     <div class="inline-flex items-center space-x-2">
                     <!--tick button-->
                         <div class="tick-button">
@@ -44,43 +47,47 @@ const listItemIncomplete = (todo_text="")=>`<div id="task" class="flex justify-b
                         <path stroke-linecap="round" stroke-linejoin="round" d="M14.74 9l-.346 9m-4.788 0L9.26 9m9.968-3.21c.342.052.682.107 1.022.166m-1.022-.165L18.16 19.673a2.25 2.25 0 01-2.244 2.077H8.084a2.25 2.25 0 01-2.244-2.077L4.772 5.79m14.456 0a48.108 48.108 0 00-3.478-.397m-12 .562c.34-.059.68-.114 1.022-.165m0 0a48.11 48.11 0 013.478-.397m7.5 0v-.916c0-1.18-.91-2.164-2.09-2.201a51.964 51.964 0 00-3.32 0c-1.18.037-2.09 1.022-2.09 2.201v.916m7.5 0a48.667 48.667 0 00-7.5 0" />
                       </svg>
                     </div>
-                </div>`
-
+                </div>`;
 
 let idOfElementToEdit = null;
 
 let todos;
 
+const updateTodosInStorage = (todoList) => {
+  const stringified = JSON.stringify(todoList);
+  localStorage.setItem(key, stringified);
+};
 
-const updateTodosInStorage = (todoList)=>{
-    const stringified = JSON.stringify(todoList);
-    localStorage.setItem(key, stringified);
-}
+const initialize = async () => {
+  // 1. check if there's data in local storage
+  // 2. if there is, load it
+  // 3. if there isn't, create an empty array and we'll use that array plus we'll add the array into local storage
+  try {
+    const res = await axios.get(
+      "http://localhost:8081/todos"
+    );
+    const { data: todosFromServer } = res.data;
+    console.log(todosFromServer);
 
-const initialize = async ()=>{
-    // 1. check if there's data in local storage 
-    // 2. if there is, load it
-    // 3. if there isn't, create an empty array and we'll use that array plus we'll add the array into local storage
-    const res = await axios.get('https://51a5-2405-201-5804-11a3-248e-b753-d3b5-4e6d.ngrok-free.app/todos')
-    console.log(res)
-    const data = localStorage.getItem(key);
-    if(!data) {
-        todos = [];
-        return;
-    }else{
-        todos = JSON.parse(data);
-        renderList(todos)
-        return;
+    if (!todosFromServer || todosFromServer.length === 0) {
+      todos=[]
+      return;
+    } else {
+      todos=todosFromServer
+      renderList();
+      return;
     }
-}
+  } catch (error) {
+    console.log(error);
+  }
+};
 
-initialize()
+initialize();
 
-const updateData = setInterval(()=>{
-    const stringified = JSON.stringify(todos);
-    localStorage.setItem(key, stringified);
-}, 1000)
-
+const updateData = setInterval(() => {
+  const stringified = JSON.stringify(todos);
+  localStorage.setItem(key, stringified);
+}, 1000);
 
 const showEdit = (id) => {
   const element = todos.find((todo) => todo.id === id);
@@ -90,61 +97,56 @@ const showEdit = (id) => {
   idOfElementToEdit = id;
 };
 
-
-
-function renderList (){
+function renderList() {
   todoContainer.innerHTML = "";
   todos.forEach((todo) => {
     const todoElement = document.createElement("div");
     todoContainer.appendChild(todoElement);
-    if(todo.completed === true){
-        todoElement.innerHTML = listItemComplete(todo.text);
-    }else{
-      todoElement.innerHTML = listItemIncomplete(todo.text);
+    if (todo.completed === true) {
+      todoElement.innerHTML = listItemComplete(todo.title);
+    } else {
+      todoElement.innerHTML = listItemIncomplete(todo.title);
     }
-    const removeButton = todoElement.querySelector(".remove-button")
-    removeButton.addEventListener('click',() =>{
+    const removeButton = todoElement.querySelector(".remove-button");
+    removeButton.addEventListener("click", () => {
       todoElement.remove();
-      todos.splice(todos.indexOf(todo),1)
-    //   updateTodosInStorage(todos)
-    })
-    const tickButton = todoElement.querySelector(".tick-button")
-    tickButton.addEventListener('click',() =>{
-      if (todo.completed==true){
-        todo.completed = false
+      todos.splice(todos.indexOf(todo), 1);
+      //   updateTodosInStorage(todos)
+    });
+    const tickButton = todoElement.querySelector(".tick-button");
+    tickButton.addEventListener("click", () => {
+      if (todo.isComplete == true) {
+        todo.isComplete = false;
         // todoElement.innerHTML = listItemIncomplete(todo.text);
         renderList();
-        console.log("true")
-      }
-      else{
-        todo.completed = true
+        console.log("true");
+      } else {
+        todo.isComplete = true;
         // todoElement.innerHTML = listItemComplete(todo.text);
         renderList();
-        console.log("false")
-
+        console.log("false");
       }
-    //   updateTodosInStorage(todos)
-    })
+      //   updateTodosInStorage(todos)
+    });
   });
-};
+}
 
 const handleAdd = (e) => {
   const itemToAdd = input.value;
   if (itemToAdd !== null && itemToAdd !== "") {
     todos.push({
       text: itemToAdd,
-      completed: false,
+      isComplete: false,
       id: Date.now(),
     });
     // updateTodosInStorage(todos)
     input.value = "";
     renderList();
-    console.log(todos)
+    console.log(todos);
     return;
   } else {
     return window.alert("adding an empty item is not possible");
   }
 };
-
 
 addbutton.addEventListener("click", handleAdd);
