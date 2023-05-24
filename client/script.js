@@ -138,12 +138,33 @@ const handleDelete = async (todoElement, id) => {
   }
 };
 
+const handleEdit = async (id, todo) => {
+  try {
+    // update the database first
+    const res = await axios.patch(`http://localhost:8081/todos/${id}`, {
+      isComplete: todo.isComplete == true ? false : true,
+    });
+    if (todo.isComplete == true) {
+      todo.isComplete = false;
+      renderList();
+      console.log("true");
+    } else {
+      todo.isComplete = true;
+      renderList();
+      console.log("false");
+    }
+    return;
+  } catch (error) {
+    console.log(error);
+  }
+};
+
 function renderList() {
   todoContainer.innerHTML = "";
   todos.forEach((todo) => {
     const todoElement = document.createElement("div");
     todoContainer.appendChild(todoElement);
-    if (todo.completed === true) {
+    if (todo.isComplete === true) {
       todoElement.innerHTML = listItemComplete(todo.title);
     } else {
       todoElement.innerHTML = listItemIncomplete(todo.title);
@@ -153,20 +174,7 @@ function renderList() {
       handleDelete(todoElement, todo.id)
     );
     const tickButton = todoElement.querySelector(".tick-button");
-    tickButton.addEventListener("click", () => {
-      if (todo.isComplete == true) {
-        todo.isComplete = false;
-        // todoElement.innerHTML = listItemIncomplete(todo.text);
-        renderList();
-        console.log("true");
-      } else {
-        todo.isComplete = true;
-        // todoElement.innerHTML = listItemComplete(todo.text);
-        renderList();
-        console.log("false");
-      }
-      //   updateTodosInStorage(todos)
-    });
+    tickButton.addEventListener("click", () => handleEdit(todo.id, todo));
   });
 }
 

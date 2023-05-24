@@ -104,22 +104,19 @@ app.patch('/todos/:id', async (req, res) => {
   try {
     const { id } = req.params;
     const { title, isComplete } = req.body;
-     const parsedData = JSON.parse(data);
-    const todo = parsedData.find((todo) => todo.id === id);
+    const data = await fs.promises.readFile("./db.json", "utf-8");
+    const parsedData = JSON.parse(data);
+    let todo = parsedData.find((todo) => todo.id === id);
     if(title && title === '') return res.status(400).json({
       message: "Todo title can not be empty",
       data: null,
     });
     if(todo){
       // delete the todo from array
-      todo={
-        ...todo,
-        title: title || todo.title,
-        isComplete: isComplete || todo.isComplete
-      }
+      todo.isComplete = isComplete
       await fs.promises.writeFile("./db.json", JSON.stringify(parsedData));
       return res.status(200).json({
-        message:"Todo deleted successfully",
+        message:"Todo updated successfully",
         data: parsedData
       })
     }
@@ -128,6 +125,7 @@ app.patch('/todos/:id', async (req, res) => {
       data: null,
     });
   } catch (error) {
+    console.log(error)
     return res.status(500).json({
       message: "Internal Server Error",
       data: null,
