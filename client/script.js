@@ -56,41 +56,19 @@ const listItemIncomplete = (
 
 let idOfElementToEdit = null;
 
-let todos;
-
-const updateTodosInStorage = (todoList) => {
-  const stringified = JSON.stringify(todoList);
-  localStorage.setItem(key, stringified);
-};
-
-const initialize = async () => {
-  // 1. check if there's data in local storage
-  // 2. if there is, load it
-  // 3. if there isn't, create an empty array and we'll use that array plus we'll add the array into local storage
+const getData = async()=>{
   try {
-    const res = await axiosInstance.get("/todos");
+     const res = await axiosInstance.get("/todos");
     const { data: todosFromServer } = res.data;
-    console.log(todosFromServer);
-
-    if (!todosFromServer || todosFromServer.length === 0) {
-      todos = [];
-      return;
-    } else {
-      todos = todosFromServer;
-      renderList();
-      return;
-    }
+    renderList(todosFromServer)
   } catch (error) {
-    console.log(error);
+    console.log(error)
   }
-};
+}
 
-initialize();
 
-const updateData = setInterval(() => {
-  const stringified = JSON.stringify(todos);
-  localStorage.setItem(key, stringified);
-}, 1000);
+getData()
+
 
 const showEdit = (id) => {
   const element = todos.find((todo) => todo.id === id);
@@ -107,16 +85,8 @@ const handleAdd = async (e) => {
       const res = await axiosInstance.post("/todos", {
         title: itemToAdd,
       });
-      console.log(res);
-      todos.push({
-        title: itemToAdd,
-        isComplete: false,
-        id: Date.now(),
-      });
-      // updateTodosInStorage(todos)
-      input.value = "";
-      renderList();
-      console.log(todos);
+      input.value = ""
+      getData()
       return;
     } else {
       return window.alert("adding an empty item is not possible");
@@ -133,10 +103,7 @@ const handleDelete = async (todoElement, id) => {
     console.log(res);
     // delete element from the DOM
     todoElement.remove();
-    // update the array
-    const index = todos.findIndex((todo) => todo.id === id);
-    todos.splice(index, 1);
-    renderList();
+    getData()
     return;
   } catch (error) {
     console.log(error);
@@ -149,22 +116,14 @@ const handleEdit = async (id, todo) => {
     const res = await axiosInstance.patch(`/todos/${id}`, {
       isComplete: todo.isComplete == true ? false : true,
     });
-    if (todo.isComplete == true) {
-      todo.isComplete = false;
-      renderList();
-      console.log("true");
-    } else {
-      todo.isComplete = true;
-      renderList();
-      console.log("false");
-    }
+    getData()
     return;
   } catch (error) {
     console.log(error);
   }
 };
 
-function renderList() {
+function renderList(todos) {
   todoContainer.innerHTML = "";
   todos.forEach((todo) => {
     const todoElement = document.createElement("div");
