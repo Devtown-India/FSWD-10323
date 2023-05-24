@@ -6,6 +6,11 @@ const lastUpdatedContainer = document.querySelector("#last-updated");
 console.log(lastUpdatedContainer);
 let lastUpdated = new Date().toLocaleString();
 
+const axiosInstance = axios.create({
+  baseURL: "http://localhost:8081",
+  headers: { "ngrok-skip-browser-warning": "" }
+});
+
 lastUpdatedContainer.innerHTML = lastUpdated;
 
 const listItemComplete = (
@@ -63,7 +68,7 @@ const initialize = async () => {
   // 2. if there is, load it
   // 3. if there isn't, create an empty array and we'll use that array plus we'll add the array into local storage
   try {
-    const res = await axios.get("http://localhost:8081/todos");
+    const res = await axiosInstance.get("/todos");
     const { data: todosFromServer } = res.data;
     console.log(todosFromServer);
 
@@ -99,7 +104,7 @@ const handleAdd = async (e) => {
   try {
     const itemToAdd = input.value;
     if (itemToAdd !== null && itemToAdd !== "") {
-      const res = await axios.post("http://localhost:8081/todos", {
+      const res = await axiosInstance.post("/todos", {
         title: itemToAdd,
       });
       console.log(res);
@@ -124,7 +129,7 @@ const handleAdd = async (e) => {
 const handleDelete = async (todoElement, id) => {
   try {
     // update the database first
-    const res = await axios.delete(`http://localhost:8081/todos/${id}`);
+    const res = await axiosInstance.delete(`/todos/${id}`);
     console.log(res);
     // delete element from the DOM
     todoElement.remove();
@@ -141,7 +146,7 @@ const handleDelete = async (todoElement, id) => {
 const handleEdit = async (id, todo) => {
   try {
     // update the database first
-    const res = await axios.patch(`http://localhost:8081/todos/${id}`, {
+    const res = await axiosInstance.patch(`/todos/${id}`, {
       isComplete: todo.isComplete == true ? false : true,
     });
     if (todo.isComplete == true) {
