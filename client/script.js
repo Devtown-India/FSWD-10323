@@ -95,40 +95,6 @@ const showEdit = (id) => {
   idOfElementToEdit = id;
 };
 
-function renderList() {
-  todoContainer.innerHTML = "";
-  todos.forEach((todo) => {
-    const todoElement = document.createElement("div");
-    todoContainer.appendChild(todoElement);
-    if (todo.completed === true) {
-      todoElement.innerHTML = listItemComplete(todo.title);
-    } else {
-      todoElement.innerHTML = listItemIncomplete(todo.title);
-    }
-    const removeButton = todoElement.querySelector(".remove-button");
-    removeButton.addEventListener("click", () => {
-      todoElement.remove();
-      todos.splice(todos.indexOf(todo), 1);
-      //   updateTodosInStorage(todos)
-    });
-    const tickButton = todoElement.querySelector(".tick-button");
-    tickButton.addEventListener("click", () => {
-      if (todo.isComplete == true) {
-        todo.isComplete = false;
-        // todoElement.innerHTML = listItemIncomplete(todo.text);
-        renderList();
-        console.log("true");
-      } else {
-        todo.isComplete = true;
-        // todoElement.innerHTML = listItemComplete(todo.text);
-        renderList();
-        console.log("false");
-      }
-      //   updateTodosInStorage(todos)
-    });
-  });
-}
-
 const handleAdd = async (e) => {
   try {
     const itemToAdd = input.value;
@@ -154,5 +120,54 @@ const handleAdd = async (e) => {
     console.log(error);
   }
 };
+
+const handleDelete = async (todoElement, id) => {
+  try {
+    // update the database first
+    const res = await axios.delete(`http://localhost:8081/todos/${id}`);
+    console.log(res);
+    // delete element from the DOM
+    todoElement.remove();
+    // update the array
+    const index = todos.findIndex((todo) => todo.id === id);
+    todos.splice(index, 1);
+    renderList();
+    return;
+  } catch (error) {
+    console.log(error);
+  }
+};
+
+function renderList() {
+  todoContainer.innerHTML = "";
+  todos.forEach((todo) => {
+    const todoElement = document.createElement("div");
+    todoContainer.appendChild(todoElement);
+    if (todo.completed === true) {
+      todoElement.innerHTML = listItemComplete(todo.title);
+    } else {
+      todoElement.innerHTML = listItemIncomplete(todo.title);
+    }
+    const removeButton = todoElement.querySelector(".remove-button");
+    removeButton.addEventListener("click", () =>
+      handleDelete(todoElement, todo.id)
+    );
+    const tickButton = todoElement.querySelector(".tick-button");
+    tickButton.addEventListener("click", () => {
+      if (todo.isComplete == true) {
+        todo.isComplete = false;
+        // todoElement.innerHTML = listItemIncomplete(todo.text);
+        renderList();
+        console.log("true");
+      } else {
+        todo.isComplete = true;
+        // todoElement.innerHTML = listItemComplete(todo.text);
+        renderList();
+        console.log("false");
+      }
+      //   updateTodosInStorage(todos)
+    });
+  });
+}
 
 addbutton.addEventListener("click", handleAdd);
