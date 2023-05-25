@@ -2,6 +2,10 @@ const express = require("express");
 const fs = require("fs");
 const uuid = require("uuid");
 const cors = require("cors");
+const jwt = require('jsonwebtoken')
+
+const SECRET_KEY = "secret_key_sdf"
+
 
 const PORT = 8081;
 
@@ -17,21 +21,16 @@ app.use(express.json());
 
 const isAuthenticated = async (req, res, next) => {
   // check for auth header if ther's no header send 401
-  const { authorisation } = req.headers;
-  if (!authorisation)
-    return res.status(401).json({
-      message: "Unauthorised",
-      data: null,
-    });
-  //  if ther's a header verify the token
-  const data = await fs.promises.readFile("./tokens.json", "utf-8");
-  const tokens = JSON.parse(data);
-  if (!tokens.includes(authorisation))
-    return res.status(401).json({
+  try {
+    const { authorisation:token } = req.headers;
+    jwt.verify(token,SECRET_KEY)
+    next()
+  } catch (error) {
+   return res.status(401).json({
       message: "Invalid token",
       data: null,
     });
-  next();
+  }
 };
 
 app.get("/ping", (req, res) => {
@@ -39,11 +38,13 @@ app.get("/ping", (req, res) => {
 });
 
 app.get("/login", async (req, res) => {
-  const token = uuid.v4();
-  const data = await fs.promises.readFile("./tokens.json", "utf-8");
-  const tokens = JSON.parse(data);
-  tokens.push(token);
-  await fs.promises.writeFile("./tokens.json", JSON.stringify(tokens));
+  const token = jwt.sign({
+    name: 'John Doe',
+    age: 30,
+    uid:12
+  },SECRET_KEY,{
+    expiresIn:'1h'
+  })
   return res.status(200).json({
     message: "Successfully logged in",
     data: {
