@@ -15,6 +15,17 @@ app.use(cors())
 app.use(logger);
 app.use(express.json());
 
+const isAuthenticated = (req,res,next)=>{
+   const {authorisation} = req.headers
+    if(!authorisation) return res.status(401).json({
+      message: "Unauthorised",
+      data: null,
+    })
+    next()
+}
+
+app.use(isAuthenticated)
+
 app.get("/ping", (req, res) => {
   res.status(200).send("PONG");
 });
@@ -26,10 +37,13 @@ app.get("/ping", (req, res) => {
  * status: 200
  * data: {}
  * message: "Success"
+ * HEADER authorisation : token
  */
+
 
 app.get("/todos", async (req, res) => {
   try {
+   
     const data = await fs.promises.readFile("./db.json", "utf-8");
     return res.status(200).json({
       message: "Successfully fetched the todos",
@@ -71,7 +85,6 @@ app.post("/todos", async (req, res) => {
 });
 
 // create an endpoint to delete a todo
-
 app.delete('/todos/:id', async (req, res) => {
   try {
     const { id } = req.params;
