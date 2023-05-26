@@ -12,12 +12,19 @@ const SECRET_KEY = "secret_key_sdf";
 const PORT = 8081;
 
 const app = express();
-
+// user
 /**
  * id: string (uuid)
  * name: string
  * email: string
  * password: string (encrypt the password)
+ *  */
+// todo
+/**
+ * id: string (uuid)
+ * title: string
+ * isComplete: boolean
+ * userId: string (uuid)
  *  */
 
 const logger = (req, res, next) => {
@@ -31,35 +38,84 @@ app.use(cors());
 app.use(logger);
 app.use(express.json());
 app.use(cookieParser());
+app.use(express.static("public"));
 
 const authMiddleware = (req, res, next) => {
   const token = req.cookies.access_token;
-  if(!token) {
-   return  res.redirect('/login')
+  if (!token) {
+    return res.redirect("/login");
   }
   try {
     const { id, email } = jwt.verify(token, SECRET_KEY);
-    res.user = {
+    req.user = {
       id,
-      email
-    }
-    next()
+      email,
+    };
+    next();
   } catch (error) {
-    res.redirect('/logout')
+    res.redirect("/logout");
   }
-}
-
-app.get("/",authMiddleware, (req, res) => {
-  const { user:{email} } = res;
-  return res.send(`Hi ${email}`);
+};
+// todos endpoints
+app.get("/", authMiddleware, (req, res) => {
+  const {
+    user: { email },
+  } = req;
+  // return res.send(`Hi ${email}`);
+  return res.sendFile(__dirname + "/pages/todo.html");
 });
+
+app.get("/todos", authMiddleware, (req, res) => {
+  try {
+    const {
+      user: { id },
+    } = req;
+    const todos = ls.get("todos").filter((todo) => todo.userId === id);
+    return res.status(200).json({
+      todos,
+    });
+  } catch (error) {
+    console.log(error);
+    res.status(500).json({
+      message: "Internal server error",
+    });
+  }
+});
+
+app.post("/todos", authMiddleware, (req, res) => {
+  try {
+    const {
+      user: { id },
+    } = req;
+    const { title } = req.body;
+    const todos = ls.get("todos");
+    const newTodo = {
+      id: uuid.v4(),
+      title,
+      isComplete: false,
+      userId: id,
+    };
+    todos.push(newTodo);
+    ls.set("todos", todos);
+    return res.status(200).json({
+      message: "Todo created",
+    });
+  } catch (error) {
+    console.log(error);
+    res.status(500).json({
+      message: "Internal server error",
+    });
+  }
+});
+
+//
 
 // endpoints to pages
 
 app.get("/login", (req, res) => {
   const token = req.cookies.access_token;
-  if(token) {
-   return  res.redirect('/')
+  if (token) {
+    return res.redirect("/");
   }
   console.log(__dirname);
   res.sendFile(__dirname + "/pages/login.html");
@@ -67,8 +123,8 @@ app.get("/login", (req, res) => {
 
 app.get("/signup", (req, res) => {
   const token = req.cookies.access_token;
-  if(token) {
-   return  res.redirect('/')
+  if (token) {
+    return res.redirect("/");
   }
   res.sendFile(__dirname + "/pages/signup.html");
 });
