@@ -32,23 +32,50 @@ app.use(logger);
 app.use(express.json());
 app.use(cookieParser());
 
-app.get("/", (req, res) => {
-  return res.send(`Hi user!!`);
+const authMiddleware = (req, res, next) => {
+  const token = req.cookies.access_token;
+  if(!token) {
+   return  res.redirect('/login')
+  }
+  try {
+    const { id, email } = jwt.verify(token, SECRET_KEY);
+    res.user = {
+      id,
+      email
+    }
+    next()
+  } catch (error) {
+    res.redirect('/logout')
+  }
+}
+
+app.get("/",authMiddleware, (req, res) => {
+  const { user:{email} } = res;
+  return res.send(`Hi ${email}`);
 });
 
 // endpoints to pages
 
 app.get("/login", (req, res) => {
+  const token = req.cookies.access_token;
+  if(token) {
+   return  res.redirect('/')
+  }
   console.log(__dirname);
   res.sendFile(__dirname + "/pages/login.html");
 });
 
 app.get("/signup", (req, res) => {
+  const token = req.cookies.access_token;
+  if(token) {
+   return  res.redirect('/')
+  }
   res.sendFile(__dirname + "/pages/signup.html");
 });
 
 app.get("/logout", (req, res) => {
-  res.send("route to logout");
+  res.clearCookie("access_token");
+  return res.redirect("/login");
 });
 
 // APi crud endpoints
