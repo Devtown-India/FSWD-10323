@@ -81,22 +81,6 @@
       </div>
     </section>
     <script>
-      function getData(form) {
-        var formData = new FormData(form);
-        return Object.fromEntries(formData);
-      }
-      const form = document.querySelector("form");
-      const handleSubmit = async (e) => {
-        try {
-          event.preventDefault();
-          const res = await axios.post("/api/login", getData(form));
-          window.location.href = "/";
-        } catch (err) {
-          console.log(err);
-          window.alert('something went wrong')
-        }
-      };
-      form.addEventListener("submit", handleSubmit);
     </script>
   </body>
 </html>
