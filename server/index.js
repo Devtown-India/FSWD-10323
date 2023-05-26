@@ -2,14 +2,33 @@ const express = require("express");
 const fs = require("fs");
 const uuid = require("uuid");
 const cors = require("cors");
-const jwt = require('jsonwebtoken')
+const jwt = require("jsonwebtoken");
+const cookieParser = require("cookie-parser");
+const initializedb = require("./utils/initializedb");
+const ls = require("local-storage");
 
-const SECRET_KEY = "secret_key_sdf"
+const SECRET_KEY = "secret_key_sdf";
 
+/*
+  User schema
+    id
+    name
+    email
+    password
+ */
+
+/*
+  Todo schema
+    id
+    user
+    title
+    isComplete
+ */
 
 const PORT = 8081;
 
 const app = express();
+initializedb();
 
 const logger = (req, res, next) => {
   console.log(`Request method: ${req.method} and request path: ${req.path}`);
@@ -18,155 +37,95 @@ const logger = (req, res, next) => {
 app.use(cors());
 app.use(logger);
 app.use(express.json());
+app.use(cookieParser());
 
-const isAuthenticated = async (req, res, next) => {
-  // check for auth header if ther's no header send 401
+const authorization = (req, res, next) => {
+  const token = req.cookies.access_token;
+  if (!token) {
+    return res.redirect('/login');
+  }
   try {
-    const { authorisation:token } = req.headers;
-    jwt.verify(token,SECRET_KEY)
-    next()
-  } catch (error) {
-   return res.status(401).json({
-      message: "Invalid token",
-      data: null,
-    });
+    const data = jwt.verify(token, SECRET_KEY);
+    req.userId = data.id;
+    req.userEmail = data.email;
+    return next();
+  } catch {
+    // token has expired
+    return res.redirect('/logout');
   }
 };
 
-app.get("/ping", (req, res) => {
-  res.status(200).send("PONG");
-});
-
-app.get("/login", async (req, res) => {
-  const token = jwt.sign({
-    name: 'John Doe',
-    age: 30,
-    uid:12
-  },SECRET_KEY,{
-    expiresIn:'1h'
-  })
-  return res.status(200).json({
-    message: "Successfully logged in",
-    data: {
-      token,
-    },
+app.get("/", authorization, (req, res) => {
+  console.log({
+    email: req.userEmail,
+    id: req.userId,
   });
+  res.send(`Hi ${req.userEmail} !!`);
 });
 
-// create an endpoint to get all of the todos
-
-/**
- response body structure
- * status: 200
- * data: {}
- * message: "Success"
- * HEADER authorisation : token
- */
-
-app.get("/todos", isAuthenticated, async (req, res) => {
-  try {
-    const data = await fs.promises.readFile("./db.json", "utf-8");
-    return res.status(200).json({
-      message: "Successfully fetched the todos",
-      data: JSON.parse(data),
-    });
-  } catch (error) {
-    return res.status(500).json({
-      message: "Internal Server Error",
-      data: null,
-    });
+app.get("/login", (req, res) => {
+  const token = req.cookies.access_token;
+  if (token) {
+    return res.redirect("/");
   }
+  res.sendFile(__dirname + "/pages/login.html");
 });
 
-// create an endpoint to add a todo
-app.post("/todos", isAuthenticated, async (req, res) => {
-  try {
-    console.log(req.body);
-    const { title } = req.body;
-    const todo = {
-      title: title,
-      isComplete: false,
-      id: uuid.v4(),
-    };
-    const data = await fs.promises.readFile("./db.json", "utf-8");
-    const parsedData = JSON.parse(data);
-    parsedData.push(todo);
-    await fs.promises.writeFile("./db.json", JSON.stringify(parsedData));
-    return res.status(200).json({
-      message: "Successfully fetched the todos",
-      data: parsedData,
-    });
-  } catch (error) {
-    console.log(error);
-    return res.status(500).json({
-      message: "Internal Server Error",
-      data: null,
-    });
+app.get("/signup", (req, res) => {
+  const token = req.cookies.access_token;
+  if (token) {
+    return res.redirect("/");
   }
+  res.sendFile(__dirname + "/pages/signup.html");
 });
 
-// create an endpoint to delete a todo
-app.delete("/todos/:id", isAuthenticated, async (req, res) => {
-  try {
-    const { id } = req.params;
-    const data = await fs.promises.readFile("./db.json", "utf-8");
-    const parsedData = JSON.parse(data);
-    const todo = parsedData.find((todo) => todo.id === id);
-    if (todo) {
-      // delete the todo from array
-      const filteredData = parsedData.filter((todo) => todo.id !== id);
-      await fs.promises.writeFile("./db.json", JSON.stringify(filteredData));
-      return res.status(200).json({
-        message: "Todo deleted successfully",
-        data: filteredData,
-      });
-    }
-    return res.status(400).json({
-      message: "Todo with this id does not exist",
-      data: null,
-    });
-  } catch (error) {
-    return res.status(500).json({
-      message: "Internal Server Error",
-      data: null,
-    });
+app.get('/logout', (req, res) => {
+  res.clearCookie('access_token')
+  res.redirect('/login')
+})
+
+
+app.post("/api/signup", (req, res) => {
+  const { email, password, name } = req.body;
+  const users = ls.get("users");
+  if (users.find((user) => user.email === email)) {
+    return res.status(400).send("User already exists");
   }
+  const newUser = {
+    id: uuid.v4(),
+    name,
+    email,
+    password,
+  };
+  users.push(newUser);
+
+  ls.set("users", users);
+  return res.status(200).send("User created");
 });
 
-// create an endpoint to update a todo
-app.patch("/todos/:id", isAuthenticated, async (req, res) => {
-  try {
-    const { id } = req.params;
-    const { title, isComplete } = req.body;
-    const data = await fs.promises.readFile("./db.json", "utf-8");
-    const parsedData = JSON.parse(data);
-    let todo = parsedData.find((todo) => todo.id === id);
-    if (title && title === "")
-      return res.status(400).json({
-        message: "Todo title can not be empty",
-        data: null,
-      });
-    if (todo) {
-      // delete the todo from array
-      todo.isComplete = isComplete;
-      await fs.promises.writeFile("./db.json", JSON.stringify(parsedData));
-      return res.status(200).json({
-        message: "Todo updated successfully",
-        data: parsedData,
-      });
-    }
-    return res.status(400).json({
-      message: "Todo with this id does not exist",
-      data: null,
-    });
-  } catch (error) {
-    console.log(error);
-    return res.status(500).json({
-      message: "Internal Server Error",
-      data: null,
-    });
+app.post("/api/login", (req, res) => {
+  const { email, password } = req.body;
+  const users = ls.get("users");
+  const user = users.find((user) => user.email === email);
+  if (!user) {
+    return res.status(400).send("User not found");
   }
+  if (user.password !== password) {
+    return res.status(400).send("Password is incorrect");
+  }
+
+  const token = jwt.sign({ id: user.id, email: user.email }, SECRET_KEY, {
+    expiresIn: "1h",
+  });
+
+  return res
+    .cookie("access_token", token, {
+      httpOnly: true,
+    })
+    .status(200)
+    .json({ message: "Logged in successfully" });
 });
+
 app.listen(PORT, () => {
   console.log(`Server is running on port ${PORT}`);
 });
