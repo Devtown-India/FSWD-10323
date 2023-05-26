@@ -80,7 +80,19 @@
         </div>
       </div>
     </section>
-    <script>
+     <script>
+      const form = document.querySelector("form");
+      const handleSubmit = async(event)=>{
+        try{
+          event.preventDefault();
+          const data = new FormData(form);
+          const res = await axios.post('/api/login', Object.fromEntries(data));
+          window.location.href = '/'
+        }catch(error){
+          console.log(error)
+        }
+      }
+      form.addEventListener("submit", handleSubmit);
     </script>
   </body>
 </html>
