@@ -86,7 +86,7 @@
         try{
           event.preventDefault();
           const data = new FormData(form);
-          const res = await axios.post('/api/login', Object.fromEntries(data));
+          const res = await axios.post('/api/auth/login', Object.fromEntries(data));
           window.location.href = '/'
         }catch(error){
           console.log(error)

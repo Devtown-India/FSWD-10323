@@ -101,7 +101,7 @@
         try{
           event.preventDefault();
           const data = new FormData(form);
-          const res = await axios.post('/api/signup', Object.fromEntries(data));
+          const res = await axios.post('/api/auth/signup', Object.fromEntries(data));
           window.location.href = '/login'
         }catch(error){
           console.log(error)
