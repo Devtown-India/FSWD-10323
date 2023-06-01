@@ -3,10 +3,11 @@ const router = express.Router();
 const ls = require('local-storage');
 const uuid = require('uuid');
 const jwt = require('jsonwebtoken');
+const bcrypt = require('bcryptjs');
 
 const SECRET_KEY = process.env.SECRET_KEY
 
-router.post("/login", (req, res) => {
+router.post("/login", async (req, res) => {
   try {
     // validate user
     const { email, password } = req.body;
@@ -18,7 +19,8 @@ router.post("/login", (req, res) => {
       });
     }
     // authenticate user
-    if (user.password !== password) {
+    const isCorrectPassword = await bcrypt.compare(password, user.password);
+    if (!isCorrectPassword) {
       return res.status(400).json({
         message: "Invalid password",
       });
@@ -44,7 +46,7 @@ router.post("/login", (req, res) => {
   }
 });
 
-router.post("/signup", (req, res) => {
+router.post("/signup", async(req, res) => {
   try {
     const { name, email, password } = req.body;
     const users = ls.get("users");
@@ -53,12 +55,17 @@ router.post("/signup", (req, res) => {
         message: "User already exists",
       });
     }
+    const salt = bcrypt.genSaltSync(10);
+    const hashedPassword = await bcrypt.hash(password, salt);
+    
     const newUser = {
       id: uuid.v4(),
       name,
       email,
-      password,
+      password:hashedPassword,
     };
+  
+    console.log(hashedPassword)
     users.push(newUser);
     ls.set("users", users);
     return res.status(200).json({
