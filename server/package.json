@@ -4,7 +4,8 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "build": "node_modules/.bin/webpack --config webpack.config.js --mode=production",
+    "dev": "node_modules/.bin/webpack --config webpack.config.js --mode=development -w "
   },
   "keywords": [],
   "author": "",
@@ -19,6 +20,7 @@
     "@babel/preset-env": "7.16.4",
     "babel-loader": "8.2.3",
     "nodemon": "^2.0.22",
+    "nodemon-webpack-plugin": "^4.8.1",
     "rimraf": "3.0.2",
     "webpack": "5.64.3",
     "webpack-cli": "4.9.1",
