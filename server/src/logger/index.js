@@ -3,8 +3,7 @@ import winston from "winston";
 import path from "path";
 
 const { format } = winston;
-const { combine, timestamp, printf, colorize, align, json } = format;
-
+const { combine, timestamp, json } = format;
 
 const levels = {
   error: 0,
@@ -53,7 +52,7 @@ const logger = winston.createLogger({
 });
 
 export const morganMiddleware = morgan(
-  ":method :url :status :res[content-length] - :response-time ms",
+  ":method :url :status - :response-time ms",
   {
     stream: {
       write: (message) => logger.http(message.trim()),
