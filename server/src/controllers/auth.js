@@ -28,6 +28,7 @@ export const resetPassword = async (req, res,next) => {
         logger.log(error)
     }
 }
+
 export const changePassword = async (req, res,next) => {
     try {
         const {password} = req.body
