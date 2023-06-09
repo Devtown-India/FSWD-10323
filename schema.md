@@ -27,7 +27,6 @@
    - image : String
    - comments : [Comment]
    - likes : [User]
-   - shareCount : Number
    - user : User
    - tags : [String]
    - createdAt : Date

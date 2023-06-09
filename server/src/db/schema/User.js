@@ -61,4 +61,9 @@ const UserSchema = new mongoose.Schema({
     timestamps:true,
 })
 
+// virtual properties
+UserSchema.virtual('fullName').get(function(){
+    return `${this.firstName} ${this.lastName}`
+})
+
 export const User = mongoose.model('User',UserSchema)
