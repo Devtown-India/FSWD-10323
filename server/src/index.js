@@ -1,14 +1,18 @@
 import express from 'express'
 import dotenv from 'dotenv'
+dotenv.config()
+
 import cors from 'cors'
 import logger,{morganMiddleware} from './logger'
 import cookieParser from 'cookie-parser'
 import authRoutes from './routes/auth'
+import { connectDB } from './utils/db.utils'
 
-dotenv.config()
 
 const app = express()
 const PORT = process.env.PORT || 8080
+
+connectDB()
 
 app.use(cors())
 app.use(express.json())
