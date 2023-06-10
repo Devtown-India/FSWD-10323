@@ -9,3 +9,7 @@
 {"level":"\u001b[31merror\u001b[39m","timestamp":"2023-06-09 19:15:59"}
 {"code":11000,"index":0,"keyPattern":{"email":1},"keyValue":{"email":"test@mail.com"},"level":"\u001b[31merror\u001b[39m","timestamp":"2023-06-09 19:17:48"}
 {"_message":"Post validation failed","errors":{"title":{"kind":"required","message":"Path `title` is required.","name":"ValidatorError","path":"title","properties":{"message":"Path `title` is required.","path":"title","type":"required"}}},"level":"\u001b[31merror\u001b[39m","timestamp":"2023-06-10 18:36:50"}
+{"level":"\u001b[31merror\u001b[39m","path":"users","timestamp":"2023-06-10 18:38:54"}
+{"_message":"Comment validation failed","errors":{"commentText":{"kind":"required","message":"Path `commentText` is required.","name":"ValidatorError","path":"commentText","properties":{"message":"Path `commentText` is required.","path":"commentText","type":"required"}}},"level":"\u001b[31merror\u001b[39m","timestamp":"2023-06-10 18:55:41"}
+{"level":"\u001b[31merror\u001b[39m","path":"comment","timestamp":"2023-06-10 18:57:17"}
+{"level":"\u001b[31merror\u001b[39m","path":"comment","timestamp":"2023-06-10 18:57:30"}

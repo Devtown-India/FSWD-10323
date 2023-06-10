@@ -7,6 +7,7 @@ import logger,{morganMiddleware} from './logger'
 import cookieParser from 'cookie-parser'
 import authRoutes from './routes/auth'
 import postRoutes from './routes/post'
+import commentRoutes from './routes/comment'
 import { connectDB } from './utils/db.utils'
 
 
@@ -21,6 +22,7 @@ app.use(cookieParser())
 app.use(morganMiddleware)
 app.use('/auth', authRoutes)
 app.use('/post', postRoutes)
+app.use('/comment', commentRoutes)
 
 app.get('/', (req, res) =>{
     res.send(`Server is running `)
