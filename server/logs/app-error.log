@@ -13,3 +13,6 @@
 {"_message":"Comment validation failed","errors":{"commentText":{"kind":"required","message":"Path `commentText` is required.","name":"ValidatorError","path":"commentText","properties":{"message":"Path `commentText` is required.","path":"commentText","type":"required"}}},"level":"\u001b[31merror\u001b[39m","timestamp":"2023-06-10 18:55:41"}
 {"level":"\u001b[31merror\u001b[39m","path":"comment","timestamp":"2023-06-10 18:57:17"}
 {"level":"\u001b[31merror\u001b[39m","path":"comment","timestamp":"2023-06-10 18:57:30"}
+{"level":"\u001b[31merror\u001b[39m","timestamp":"2023-06-10 19:06:58"}
+{"level":"\u001b[31merror\u001b[39m","timestamp":"2023-06-10 19:07:16"}
+{"level":"\u001b[31merror\u001b[39m","timestamp":"2023-06-10 19:07:49"}
