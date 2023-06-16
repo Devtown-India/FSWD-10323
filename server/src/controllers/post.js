@@ -1,5 +1,6 @@
 import { Post, Comment } from "../db";
 import logger from "../logger";
+import { validationResult } from "express-validator";
 
 export const getPosts = async (req, res) => {
   try {
@@ -53,6 +54,15 @@ export const getPost = async (req, res) => {
 
 export const createPost = async (req, res) => {
   try {
+    const errors = validationResult(req);
+    if (!errors.isEmpty()) {
+      console.log(errors)
+      return res.status(400).json({
+        message: "Validation failed",
+        success: false,
+        errors: errors.array(),
+      });
+    }
     const { userId, title, description, image } = req.body;
     const post = await Post.create({
       title,
