@@ -18,3 +18,5 @@
 {"level":"\u001b[31merror\u001b[39m","timestamp":"2023-06-10 19:07:49"}
 {"_message":"Post validation failed","errors":{"image":{"kind":"required","message":"Path `image` is required.","name":"ValidatorError","path":"image","properties":{"message":"Path `image` is required.","path":"image","type":"required"}}},"level":"\u001b[31merror\u001b[39m","timestamp":"2023-06-13 19:14:44"}
 {"_message":"Post validation failed","errors":{"image":{"kind":"required","message":"Path `image` is required.","name":"ValidatorError","path":"image","properties":{"message":"Path `image` is required.","path":"image","type":"required"}}},"level":"\u001b[31merror\u001b[39m","timestamp":"2023-06-13 19:16:31"}
+{"level":"\u001b[32minfo\u001b[39m","message":"\u001b[32mServer is listening on port 8080\u001b[39m","timestamp":"2023-06-16 18:26:28"}
+{"level":"\u001b[33mwarn\u001b[39m","message":"\u001b[33mConnected to DB\u001b[39m","timestamp":"2023-06-16 18:26:28"}
