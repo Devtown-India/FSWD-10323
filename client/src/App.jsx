@@ -6,16 +6,20 @@ import Footer from "./components/Footer";
 
 const App = () => {
 
-  const [count, setCount] = useState(0)
+  let [count, setCount] = useState(0)
 
   const handleInc = ()=>{
-    count++
-    console.log(count)
+    setCount((prev)=>prev+1)
   }
 
   const handleDec = ()=>{
-    count--
-    console.log(count)
+    setCount((prev)=>prev-1)
+  }
+
+  const [todos,setTodos] = useState([])
+
+  const addTodo = (todo)=>{
+    setTodos([...todos,todo])
   }
 
   return (
@@ -23,6 +27,11 @@ const App = () => {
       <button onClick={handleDec} >-</button>
       <h1>{count}</h1>
       <button onClick={handleInc} >+</button>
+      
+      <button onClick={()=>addTodo("this is an item")} >Add</button>
+      <ul>
+        {todos.map((todo,index)=><li key={index} >{todo}</li>)}
+      </ul>
     </div>
   );
 };
