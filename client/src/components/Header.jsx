@@ -1,11 +1,15 @@
-
 const Header = () => {
-    return (
-      <header>
-        <h1>Todo list</h1>
-        <input type="text" />
-        <button>Add</button>
-      </header>
-    );
+  const handleSubmit = (e) => {
+    e.preventDefault();
+    console.log(e.target);
   };
-export default Header;  
+
+  return (
+    <header>
+      <h1>Todo list</h1>
+      <input type="text" />
+      <button onClick={handleSubmit}>Add</button>
+    </header>
+  );
+};
+export default Header;
