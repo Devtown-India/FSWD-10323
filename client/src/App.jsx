@@ -10,7 +10,7 @@ const App = () => {
 
   return (
     <div>
-      <Header/>
+      <Header setTodos={setTodos} />
       <List todos={todos} />
     </div>
   );

@@ -1,23 +1,21 @@
-import {useState} from 'react'
+import { useState } from "react";
 
-const Header = () => {
+const Header = ({ setTodos }) => {
+  const [todo, setTodo] = useState("");
 
-  const [todo,setTodo] = useState('')
+  const handleSubmit = (e) => {
+    setTodos((prevTodos) => [...prevTodos, todo]);
+  };
 
-  const handleSubmit = (e)=>{
-    console.log(todo)
-  }
-
-  const handleChange = (e)=>{
-    setTodo(e.target.value)
-  }
-
+  const handleChange = (e) => {
+    setTodo(e.target.value);
+  };
 
   return (
     <header>
       <h1>Todo list</h1>
       <input onChange={handleChange} type="text" />
-      <button onClick={handleSubmit} >Add</button>
+      <button onClick={handleSubmit}>Add</button>
     </header>
   );
 };
