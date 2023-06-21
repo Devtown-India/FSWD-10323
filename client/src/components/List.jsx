@@ -16,7 +16,7 @@ const List = ({todos}) => {
           } */}
            {
             todos.map((todo, index) => {
-              return <li key={index}>{todo}</li>
+              return <li key={todo.id}>{todo.title}</li>
             })
           }
         </ul>

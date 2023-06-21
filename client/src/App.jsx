@@ -6,7 +6,14 @@ import Footer from "./components/Footer";
 
 const App = () => {
 
-  const [todos,setTodos] = useState(['todo 1', 'todo 2', 'todo 23'])
+  /*
+    * title
+    * complete
+    * id
+  */
+
+  const [todos,setTodos] = useState([])
+  console.log(todos)
 
   return (
     <div>
