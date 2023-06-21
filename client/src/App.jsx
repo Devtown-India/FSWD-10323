@@ -18,7 +18,7 @@ const App = () => {
   return (
     <div>
       <Header setTodos={setTodos} />
-      <List todos={todos} />
+      <List setTodos={setTodos} todos={todos} />
     </div>
   );
 };

@@ -1,27 +1,30 @@
-import '../css/List.css'
+import "../css/List.css";
 
-const List = ({todos}) => {
-    return (
-      <section>
-        <ul className="todos" >
-          {/* {
-            todos.map((todo, index) => {
-              return <li style={{
-                color:"red",
-                backgroundColor:"yellow",
-                margin:'10px auto',
-                width:'50%',
-              }} key={index}>{todo}</li>
-            })
-          } */}
-           {
-            todos.map((todo, index) => {
-              return <li key={todo.id}>{todo.title}</li>
-            })
-          }
-        </ul>
-      </section>
-    );
-  };
+const List = ({ todos,setTodos }) => {
 
-  export default List;
+  const handleDelete = (id) => {
+    setTodos((prevTodos) => {
+      return prevTodos.filter((todo) => todo.id !== id);
+    });
+  }
+
+  return (
+    <section>
+      <ul className="todos">
+        {todos.map((todo, index) => {
+          return (
+            <li key={todo.id}>
+              {todo.title}{" "}
+              <button onClick={() => handleDelete(todo.id)}>-</button>
+            </li>
+          );
+        })}
+        {
+          todos.length === 0 && <li>No todos left!</li>
+        }
+      </ul>
+    </section>
+  );
+};
+
+export default List;
