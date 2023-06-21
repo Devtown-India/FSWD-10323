@@ -22,16 +22,11 @@ const App = () => {
     setTodos([...todos,todo])
   }
 
+  console.log('render')
+
   return (
     <div>
-      <button onClick={handleDec} >-</button>
-      <h1>{count}</h1>
-      <button onClick={handleInc} >+</button>
-      
-      <button onClick={()=>addTodo("this is an item")} >Add</button>
-      <ul>
-        {todos.map((todo,index)=><li key={index} >{todo}</li>)}
-      </ul>
+      <Header/>
     </div>
   );
 };

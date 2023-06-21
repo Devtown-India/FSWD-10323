@@ -1,14 +1,22 @@
-const Header = () => {
-  const handleSubmit = (e) => {
-    e.preventDefault();
-    console.log(e.target);
-  };
+import {useState} from 'react'
 
+const Header = () => {
+
+  const [todo,setTodo] = useState('')
+
+  const handleSubmit = (e)=>{
+    console.log(todo)
+  }
+
+  const handleChange = (e)=>{
+    setTodo(e.target.value)
+  }
+  
   return (
     <header>
       <h1>Todo list</h1>
-      <input type="text" />
-      <button onClick={handleSubmit}>Add</button>
+      <input onChange={handleChange} type="text" />
+      <button onClick={handleSubmit} >Add</button>
     </header>
   );
 };
