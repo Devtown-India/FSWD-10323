@@ -11,7 +11,8 @@ const Header = () => {
   const handleChange = (e)=>{
     setTodo(e.target.value)
   }
-  
+
+
   return (
     <header>
       <h1>Todo list</h1>
