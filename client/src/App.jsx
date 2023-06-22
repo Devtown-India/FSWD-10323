@@ -2,10 +2,11 @@ import React, { useState } from "react";
 import Header from "./components/Header";
 import List from "./components/List";
 import Footer from "./components/Footer";
+import Todo from "./components/Todo";
 
 const App = () => {
 
-  const [todos, setTodos] = useState([])
+  const [todos, setTodos] = useState([{title:'this is sa tile',id:"random",complete:true}])
 
   return (
     <div className="antialiased  bg-slate-200 text-slate-700 mx-2">
@@ -18,8 +19,13 @@ const App = () => {
         </div>
 
         <p class="text-slate-500">{todos.length!==0?`Hello, here are your latest todos`:`Add todos to get started`} </p>
-        <div id="todo-container..."></div>
+        <div id="todo-container...">
+          {/* Todos go here */}
 
+
+          {todos.map((todo) => <Todo todo={todo} />)}
+
+        </div>
         <p class="text-xs text-slate-500 mt-4 text-center">
           Last updated
           <span id="last-updated">{new Date().toDateString()}</span>
