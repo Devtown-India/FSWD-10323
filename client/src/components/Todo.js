@@ -1,5 +1,8 @@
-const Todo = ({ todo }) => {
+const Todo = ({ todo ,changeState}) => {
   const { id, title, complete } = todo;
+
+ 
+
   return (
     <div
       key={id}
@@ -10,6 +13,7 @@ const Todo = ({ todo }) => {
         <div>
           {!complete ? (
             <svg
+            onClick={()=>changeState(id)}
               xmlns="http://www.w3.org/2000/svg"
               fill="none"
               viewBox="0 0 24 24"
@@ -25,6 +29,7 @@ const Todo = ({ todo }) => {
             </svg>
           ) : (
             <svg
+            onClick={()=>changeState(id)}
               xmlns="http://www.w3.org/2000/svg"
               fill="none"
               viewBox="0 0 24 24"

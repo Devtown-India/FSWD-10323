@@ -8,6 +8,16 @@ const App = () => {
 
   const [todos, setTodos] = useState([{title:'this is sa tile',id:"random",complete:true}])
 
+   const changeState = (id)=>{
+    setTodos(todos.map((todo)=>{
+      if(todo.id===id){
+        todo.complete=!todo.complete
+      }
+      return todo
+    }))
+
+  }
+
   return (
     <div className="antialiased  bg-slate-200 text-slate-700 mx-2">
       <div class="max-w-lg mx-auto my-10 bg-white p-8 rounded-xl shadow shadow-slate-300">
@@ -15,15 +25,14 @@ const App = () => {
           <div>
             <h1 class="text-3xl font-medium">Todo list</h1>
           </div>
-          <Header />
+          <Header setTodos={setTodos} />
         </div>
 
         <p class="text-slate-500">{todos.length!==0?`Hello, here are your latest todos`:`Add todos to get started`} </p>
         <div id="todo-container...">
           {/* Todos go here */}
 
-
-          {todos.map((todo) => <Todo todo={todo} />)}
+          {todos.map((todo) => <Todo changeState={changeState} todo={todo} />)}
 
         </div>
         <p class="text-xs text-slate-500 mt-4 text-center">
