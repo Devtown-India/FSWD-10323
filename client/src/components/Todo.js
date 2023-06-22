@@ -1,4 +1,4 @@
-const Todo = ({ todo ,changeState}) => {
+const Todo = ({ todo ,changeState,deleteTodo}) => {
   const { id, title, complete } = todo;
 
  
@@ -51,7 +51,7 @@ const Todo = ({ todo ,changeState}) => {
           <div>{title}</div>
         )}
       </div>
-      <div>
+      <div onClick={()=>deleteTodo(id)} >
         <svg
           xmlns="http://www.w3.org/2000/svg"
           fill="none"
