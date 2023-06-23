@@ -19,6 +19,12 @@ const Navabar = ({ changeView }) => {
       >
         Timer
       </li>
+      <li
+        onClick={() => changeView("clicks")}
+        className="text-indigo-500 hover:cursor-pointer underline mx-4"
+      >
+        Clicks
+      </li>
     </ul>
   );
 };
