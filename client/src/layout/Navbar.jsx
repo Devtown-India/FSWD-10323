@@ -1,4 +1,4 @@
-const Navabar = ({ changeView }) => {
+const Navbar = ({ changeView }) => {
   return (
     <ul className="flex justify-center">
       <li
@@ -29,4 +29,4 @@ const Navabar = ({ changeView }) => {
   );
 };
 
-export default Navabar;
+export default Navbar;
