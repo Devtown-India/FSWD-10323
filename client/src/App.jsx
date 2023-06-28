@@ -1,4 +1,5 @@
 import { useState } from "react";
+import { Route, Routes } from "react-router";
 import Home from "./components/Home";
 import Contact from "./components/Contact";
 
@@ -11,11 +12,26 @@ const App = () => {
     window.history.pushState({}, "", "mobiles");
   };
 
+  const { pathname: path } = window.location;
+
   return (
     <div>
-      <button onClick={goback}>Go back</button>
-      <br />
-      <button onClick={changeurl}>ChangeUrl</button>
+      <ul>
+        <li>
+          <a className="underline" href="/">
+            Home
+          </a>
+        </li>
+        <li>
+          <a className="underline" href="/contact">
+            Contact
+          </a>
+        </li>
+      </ul>
+      <Routes>
+        <Route path="/" element={<Home />} />
+        <Route path="/contact" element={<Contact />} />
+      </Routes>
     </div>
   );
 };
