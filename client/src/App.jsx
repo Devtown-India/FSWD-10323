@@ -2,30 +2,21 @@ import { useState } from "react";
 import { Route, Routes } from "react-router";
 import Home from "./components/Home";
 import Contact from "./components/Contact";
+import { Link } from "react-router-dom";
 
 const App = () => {
-  const goback = () => {
-    console.log(window.history.back());
-  };
-
-  const changeurl = () => {
-    window.history.pushState({}, "", "mobiles");
-  };
-
-  const { pathname: path } = window.location;
-
   return (
     <div>
       <ul>
         <li>
-          <a className="underline" href="/">
+          <Link className="underline" to="/">
             Home
-          </a>
+          </Link>
         </li>
         <li>
-          <a className="underline" href="/contact">
+          <Link className="underline" to="/contact">
             Contact
-          </a>
+          </Link>
         </li>
       </ul>
       <Routes>
