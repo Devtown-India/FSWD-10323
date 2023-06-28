@@ -3,16 +3,19 @@ import Home from "./components/Home";
 import Contact from "./components/Contact";
 
 const App = () => {
-  const [view, setView] = useState("home");
-  console.log(window.location);
+  const goback = () => {
+    console.log(window.history.back());
+  };
+
+  const changeurl = () => {
+    window.history.pushState({}, "", "mobiles");
+  };
 
   return (
     <div>
-      <ul>
-        <li onClick={() => setView("home")}>Home</li>
-        <li onClick={() => setView("contact")}>COntact</li>
-      </ul>
-      {view === "home" ? <Home /> : <Contact />}
+      <button onClick={goback}>Go back</button>
+      <br />
+      <button onClick={changeurl}>ChangeUrl</button>
     </div>
   );
 };
