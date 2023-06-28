@@ -7,7 +7,7 @@ import { Link } from "react-router-dom";
 const App = () => {
   return (
     <div>
-      <ul>
+      <ul className="flex my-4">
         <li>
           <Link className="underline" to="/">
             Home
