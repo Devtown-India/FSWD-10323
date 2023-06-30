@@ -9,6 +9,7 @@ import authRoutes from './routes/auth'
 import postRoutes from './routes/post'
 import commentRoutes from './routes/comment'
 import { connectDB } from './utils/db.utils'
+import jwt from 'jsonwebtoken'
 
 
 const app = express()
@@ -16,10 +17,30 @@ const PORT = process.env.PORT || 8080
 
 connectDB()
 
-app.use(cors())
+app.use(cors(
+    {
+        origin: 'http://localhost:3000',
+        credentials: true
+    }
+))
 app.use(express.json())
 app.use(cookieParser())
 app.use(morganMiddleware)
+
+app.post('/login',(req,res)=>{
+    const {email,password} = req.body
+    const token = jwt.sign({email,password},process.env.JWT_SECRET)
+    return res
+    .cookie("token", token, {
+      httpOnly: true,
+    })
+    .status(200)
+    .json({
+      message: "User signin success",
+      token: token,
+    });
+})
+
 app.use('/auth', authRoutes)
 app.use('/post', postRoutes)
 app.use('/comment', commentRoutes)
