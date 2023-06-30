@@ -1,14 +1,15 @@
 import { useEffect, useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
+import axios from "axios";
 
-const Login = ({ token, user }) => {
+const Login = ({ state: { token, user }, setState }) => {
   const navigate = useNavigate();
 
   useEffect(() => {
     if (token) {
       navigate("/");
     }
-  }, []);
+  }, [token]);
 
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
@@ -18,7 +19,11 @@ const Login = ({ token, user }) => {
     try {
       setLoading(true);
       e.preventDefault();
-      console.log({ email, password });
+      const {
+        data: { token, user },
+      } = await axios.post("http://localhost:8080/login", { email, password });
+      localStorage.setItem("token", token);
+      setState({ token, user });
     } catch (error) {
       console.log(error);
     } finally {

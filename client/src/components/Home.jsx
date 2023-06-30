@@ -1,7 +1,7 @@
 import { useEffect } from "react";
 import { useNavigate } from "react-router";
 
-const Home = ({ token, user }) => {
+const Home = ({ state: { token, user } }) => {
   const navigate = useNavigate();
 
   useEffect(() => {
