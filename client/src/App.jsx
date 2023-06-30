@@ -1,24 +1,16 @@
-import { useEffect, useRef, useState } from "react";
-import { Route, Routes } from "react-router";
+import { Routes, Route } from "react-router-dom";
 import Home from "./components/Home";
-import Contact from "./components/Contact";
-import { Link } from "react-router-dom";
-import Navbar from "./layout/Navbar";
-import Footer from "./layout/Footer";
+import Login from "./components/Login";
+import Signup from "./components/SIgnup";
 
 const App = () => {
-  const [count, setcount] = useState(0);
-
   return (
     <div>
-      <Navbar />
-      <button onClick={() => setcount((prev) => prev + 1)}>inc</button>
-      {count}
       <Routes>
         <Route path="/" element={<Home />} />
-        <Route path="/contact" element={<Contact />} />
+        <Route path="/signup" element={<Signup />} />
+        <Route path="/login" element={<Login />} />
       </Routes>
-      {/* <Footer /> */}
     </div>
   );
 };

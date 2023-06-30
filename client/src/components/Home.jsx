@@ -1,37 +1,33 @@
-import { useEffect, useRef, useState } from "react";
-import { nanoid } from "nanoid";
-
 const Home = () => {
-  const [arr, setArr] = useState([
-    "this si something",
-    "this is something else",
-    "this is something else again",
-  ]);
-  const generateRandomKey = () => {
-    return Math.random().toString(5).substr(2, 9);
-  };
   return (
-    <div>
-      <button onClick={() => setArr((prev) => ["new item", ...prev])}>
-        Add
-      </button>
-      {arr.map((e, index) => {
-        const id = nanoid();
-        console.log(id);
-        return (
-          <div key={id} className="my-3">
-            {e}{" "}
-            <input
-              type="text"
-              id="large-input"
-              className="w-1/3 p-1 text-gray-900 border border-gray-300 rounded-lg bg-gray-50 "
-            />{" "}
-          </div>
-        );
-      })}
-      {/* <div>{arr[0]}</div>
-      <div>{arr[1]}</div>
-      <div>{arr[2]}</div> */}
+    <div className="max-w-lg mx-auto my-10 bg-white p-8 rounded-xl shadow shadow-slate-300">
+      <div className="flex flex-col justify-between items-center">
+        <div>
+          <h1 className="text-3xl font-medium">Todo list</h1>
+        </div>
+        <div className="relative w-full my-3">
+          <input
+            type="search"
+            id="add-todo"
+            className="block p-4 pl-10 w-full text-sm text-gray-900 bg-gray-50 rounded-lg border border-gray-300 focus:ring-blue-500 focus:border-blue-500 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
+            placeholder="Add item to your todo list"
+            required=""
+          />
+          <button
+            type="submit"
+            id="add-todo-btn"
+            className="text-white absolute right-2.5 bottom-2.5 bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm px-4 py-2 dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800"
+          >
+            Add
+          </button>
+        </div>
+      </div>
+      <p className="text-slate-500">Hello, here are your latest list</p>
+      <div id="todo-container" />
+      <p className="text-xs text-slate-500 text-center">
+        Last updated
+        <span id="last-updated" />
+      </p>
     </div>
   );
 };
