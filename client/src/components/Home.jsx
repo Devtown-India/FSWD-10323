@@ -1,4 +1,15 @@
-const Home = () => {
+import { useEffect } from "react";
+import { useNavigate } from "react-router";
+
+const Home = ({ token, user }) => {
+  const navigate = useNavigate();
+
+  useEffect(() => {
+    if (!token) {
+      navigate("/login");
+    }
+  }, []);
+
   return (
     <div className="max-w-lg mx-auto my-10 bg-white p-8 rounded-xl shadow shadow-slate-300">
       <div className="flex flex-col justify-between items-center">
