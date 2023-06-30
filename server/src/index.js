@@ -29,11 +29,10 @@ app.use(morganMiddleware)
 
 app.post('/login',(req,res)=>{
     const {email,password} = req.body
-    const token = jwt.sign({email,password},process.env.JWT_SECRET)
-    return res
-    .cookie("token", token, {
-      httpOnly: true,
+    const token = jwt.sign({email,password},process.env.JWT_SECRET,{
+        expiresIn: '30s'
     })
+    return res
     .status(200)
     .json({
       message: "User signin success",
@@ -43,6 +42,20 @@ app.post('/login',(req,res)=>{
             id:'sdfsadfasd2134'
       }
     });
+})
+
+app.get('/validateToken/:token',(req,res)=>{
+    const {token} = req.params
+    if(!token){
+        return res.status(401).json({message:'No token found'})
+    }
+    try{
+        const decoded = jwt.verify(token,process.env.JWT_SECRET)
+        return res.status(200).json({message:'Token is valid',user:decoded,token})
+    }catch(err){
+        // remote the cookie
+        return res.status(401).json({message:'Token is invalid'})
+    }
 })
 
 app.use('/auth', authRoutes)
