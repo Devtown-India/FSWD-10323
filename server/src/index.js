@@ -38,6 +38,10 @@ app.post('/login',(req,res)=>{
     .json({
       message: "User signin success",
       token: token,
+      user:{
+            email:email,
+            id:'sdfsadfasd2134'
+      }
     });
 })
 
