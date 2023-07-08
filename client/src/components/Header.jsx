@@ -1,15 +1,18 @@
 import { useContext, useEffect, useState } from "react";
 import { TodoContext } from "../contexts/Todo";
+import { useDispatch } from "react-redux";
 
 const Header = () => {
-  const context = useContext(TodoContext);
+  // const context = useContext(TodoContext);
   const [todo, setTodo] = useState("");
-  const { addTodo } = context;
-
-  useEffect(() => {
-    console.log(context);
-    setTodo("aaho");
-  }, [todo]);
+  const dispatch = useDispatch();
+  // const { addTodo } = context;
+  const addTodo = () => {
+    dispatch({
+      type: "ADD_TODO",
+      payload: todo,
+    });
+  };
 
   return (
     <div>

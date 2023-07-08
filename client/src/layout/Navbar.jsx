@@ -2,8 +2,6 @@ import { useContext } from "react";
 import { Link } from "react-router-dom";
 import { TodoContext } from "../contexts/Todo";
 const Navbar = ({ changeView }) => {
-  const context = useContext(TodoContext);
-  console.log(context);
   return (
     <nav class="bg-white border-gray-200 dark:bg-gray-900">
       <div class="max-w-screen-xl flex flex-wrap items-center justify-between mx-auto p-4">

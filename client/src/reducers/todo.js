@@ -11,6 +11,10 @@ const initialState = {
             complete: false
         },
     ],
+    stuff:{
+        id: 1,
+        something:'something'
+    }
 }
 
 export const todoReducer = (state = initialState, action) => {
