@@ -4,7 +4,7 @@ import { useSelector, useDispatch } from "react-redux";
 
 const List = () => {
   // const context = useContext(TodoContext);
-  const todos = useSelector((state) => state.todos);
+  const { todos } = useSelector((state) => state.todos);
   const dispatch = useDispatch();
   const handleDelete = (id) => {
     dispatch({

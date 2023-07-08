@@ -8,12 +8,12 @@ const initialState = {
     }
 }
 
-export const todoReducer = (state = initialState, action) => {
-    console.log(action)
+export default (state = initialState, action) => {
+    console.log(state)
     switch (action.type) {
         case 'ADD_TODO':
             return {
-                ...state,
+                // ...state,
                 todos: [...state.todos,{
                     id:nanoid(),
                     title:action.payload,
