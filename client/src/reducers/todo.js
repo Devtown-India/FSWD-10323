@@ -1,16 +1,7 @@
+import { nanoid } from "nanoid"
+
 const initialState = {
-    todos: [
-        {
-            id: 1,
-            title: 'Todo 1',
-            complete: false
-        },
-        {
-            id: 2,
-            title: 'Todo 2',
-            complete: false
-        },
-    ],
+    todos: [],
     stuff:{
         id: 1,
         something:'something'
@@ -20,6 +11,15 @@ const initialState = {
 export const todoReducer = (state = initialState, action) => {
     console.log(action)
     switch (action.type) {
+        case 'ADD_TODO':
+            return {
+                ...state,
+                todos: [...state.todos,{
+                    id:nanoid(),
+                    title:action.payload,
+                    complete:false
+                }]
+            }
         default:
             return state
     }
