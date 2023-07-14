@@ -3,18 +3,21 @@ import { Route, Routes } from "react-router";
 import { Link } from "react-router-dom";
 import Navbar from "./layout/Navbar";
 import Footer from "./layout/Footer";
-import Header from "./components/Header";
-import List from "./components/List";
-import { TodoContextProvider } from "./contexts/Todo";
+import Gallery from "./components/Gallery";
+import PostView from "./components/PostView";
 
 const App = () => {
   return (
-    <div>
+    <div
+      style={{
+        height: "auto",
+      }}
+    >
       <Navbar />
-      <TodoContextProvider>
-        <Header />
-        <List />
-      </TodoContextProvider>
+      <Routes>
+        <Route path="/" element={<Gallery />} />
+        <Route path="/post/:id" element={<PostView />} />
+      </Routes>
       <Footer />
     </div>
   );
