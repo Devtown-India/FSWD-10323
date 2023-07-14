@@ -32,30 +32,16 @@ const Gallery = () => {
       // if observer is already observing then disconnect it
       observer.current.disconnect();
     }
-    observer.current = new IntersectionObserver(
-      (entries) => {
-        if (entries[0].isIntersecting) {
-          setPage((prev) => prev + 1);
-        }
-      },
-      {
-        threshold: 0,
+    observer.current = new IntersectionObserver((entries) => {
+      if (entries[0].isIntersecting) {
+        setPage((prev) => prev + 1);
       }
-    );
+    });
     if (lastImageRef.current) {
       observer.current.observe(lastImageRef.current);
     }
   }, [posts, loading]);
 
-  const images = [
-    { src: "https://picsum.photos/200/300" },
-    { src: "https://picsum.photos/100/300" },
-    { src: "https://picsum.photos/300/300" },
-    { src: "https://picsum.photos/200/100" },
-    { src: "https://picsum.photos/100/300" },
-
-    { src: "https://picsum.photos/200/300" },
-  ];
   return (
     <>
       <ResponsiveMasonry
