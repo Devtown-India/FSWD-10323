@@ -2,36 +2,40 @@ import { User } from "../db";
 import logger from "../logger";
 import { hashPassword } from "../utils/auth.utils";
 import { generateResetToken, verifyResetToken } from "../utils/token";
+import { validationResult } from "express-validator";
 
 export const signup = async (req, res, next) => {
   try {
+    // check for validation errors
+    const errors = validationResult(req);
+    if (!errors.isEmpty()) {
+      return res.status(400).json({
+        message: "Validation failed",
+        success: false,
+        data: errors.array(),
+      });
+    }
     // validate this data
-    const {firstName,lastName,email,password,phone,profilePicture} = req.body;
+    const { firstName, lastName, email, password } = req.body;
     // check if user exists in the DB
-    // const user = await User.findOne({ email });
-    // if(user){
-    //     return res.status(400).json({
-    //         message: "User already exists",
-    //         success: false,
-    //         data: null,
-    //     });
-    // }
-    // create a new user
-    // hash the password
-    const hashedPassword = await hashPassword(password);
+    const user = await User.findOne({ email });
+    if (user) {
+      return res.status(400).json({
+        message: "user already exists",
+        success: false,
+        data: null,
+      });
+    }
     const createdUser = await User.create({
-        firstName,
-        lastName,
-        email,
-        password:hashedPassword,
-        phone,
-        profilePicture,
-    })
-    // send the response
+      firstName,
+      lastName,
+      email,
+      password,
+    });
     return res.status(201).json({
-        message: "User created successfully",
-        success: true,
-        data: createdUser,
+      message: "User created successfully",
+      success: true,
+      data: createdUser,
     });
   } catch (error) {
     logger.error(error);
