@@ -20,3 +20,5 @@
 {"_message":"Post validation failed","errors":{"image":{"kind":"required","message":"Path `image` is required.","name":"ValidatorError","path":"image","properties":{"message":"Path `image` is required.","path":"image","type":"required"}}},"level":"\u001b[31merror\u001b[39m","timestamp":"2023-06-13 19:16:31"}
 {"level":"\u001b[32minfo\u001b[39m","message":"\u001b[32mServer is listening on port 8080\u001b[39m","timestamp":"2023-06-16 18:26:28"}
 {"level":"\u001b[33mwarn\u001b[39m","message":"\u001b[33mConnected to DB\u001b[39m","timestamp":"2023-06-16 18:26:28"}
+{"code":11000,"index":0,"keyPattern":{"email":1},"keyValue":{"email":"test2@mail.com"},"level":"\u001b[31merror\u001b[39m","timestamp":"2023-07-15 19:07:00"}
+{"code":11000,"index":0,"keyPattern":{"email":1},"keyValue":{"email":"test2@mail.com"},"level":"\u001b[31merror\u001b[39m","timestamp":"2023-07-15 19:07:51"}

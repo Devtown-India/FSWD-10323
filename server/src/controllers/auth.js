@@ -17,15 +17,6 @@ export const signup = async (req, res, next) => {
     }
     // validate this data
     const { firstName, lastName, email, password } = req.body;
-    // check if user exists in the DB
-    const user = await User.findOne({ email });
-    if (user) {
-      return res.status(400).json({
-        message: "user already exists",
-        success: false,
-        data: null,
-      });
-    }
     const createdUser = await User.create({
       firstName,
       lastName,
