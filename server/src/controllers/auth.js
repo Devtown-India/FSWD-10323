@@ -91,11 +91,12 @@ export const login = async (req, res, next) => {
   }
 };
 
-export const resetPassword = async (req, res, next) => {
+export const forgotPassword = async (req, res, next) => {
   try {
     // check if user exists in the DB
-    let userExists = true;
-    if (!userExists) {
+    const {email} = req.body;
+    const user = await User.findOne({ email})
+    if(!user){
       return res.status(400).json({
         message: "User does not exist",
         success: false,
@@ -104,14 +105,17 @@ export const resetPassword = async (req, res, next) => {
     }
     // generate a token and send email
     const token = generateResetToken({
-      email: "abc@mail.com",
+      email,
     });
-    const resetPasswordLink = `http://localhost:3000/reset-password/${token}`;
+    const resetPasswordLink = `http://localhost:8080/reset-password/${token}`;
     // send the email
     return res.status(200).json({
       message: "Reset password link sent to email",
       success: true,
-      data: null,
+      data: {
+        resetPasswordLink,
+        token
+      },
     });
   } catch (error) {
     logger.error(error);
@@ -124,6 +128,14 @@ export const resetPassword = async (req, res, next) => {
 
 export const changePassword = async (req, res, next) => {
   try {
+    const errors = validationResult(req);
+    if (!errors.isEmpty()) {
+      return res.status(400).json({
+        message: "Validation failed",
+        success: false,
+        data: errors.array(),
+      });
+    }
     const { password } = req.body;
     const { token } = req.params;
     // verify the token
@@ -136,20 +148,8 @@ export const changePassword = async (req, res, next) => {
       });
     }
     const { email } = payload;
-    const user = {};
-    //! redundant code
-    if (!user) {
-      return res.status(400).json({
-        message: "User does not exist",
-        success: false,
-        data: null,
-      });
-    }
-    // update the password
-    const hashEdPassword = "hashed password";
-    user.password = hashEdPassword;
-    // save the user
-    // send email
+    await User.findOneAndUpdate({ email }, { password });
+
     return res.status(200).json({
       message: "Password updated successfully",
       success: true,
