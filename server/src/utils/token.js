@@ -1,8 +1,10 @@
 import jwt from 'jsonwebtoken'
 import logger from '../logger'
 
-const resetPassSecret = process.env.RESET_PASSWORD_SECRET
-const authSecrett = process.env.AUTH_SECRET
+
+export const generateToken = (payload) => {
+    return jwt.sign(payload,process.env.AUTH_SECRET,{expiresIn:'1d'})
+}
 
 export const generateResetToken = (payload) => {
     return jwt.sign(payload,resetPassSecret,{expiresIn:'5m'})

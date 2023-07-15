@@ -22,3 +22,10 @@
 {"level":"\u001b[33mwarn\u001b[39m","message":"\u001b[33mConnected to DB\u001b[39m","timestamp":"2023-06-16 18:26:28"}
 {"code":11000,"index":0,"keyPattern":{"email":1},"keyValue":{"email":"test2@mail.com"},"level":"\u001b[31merror\u001b[39m","timestamp":"2023-07-15 19:07:00"}
 {"code":11000,"index":0,"keyPattern":{"email":1},"keyValue":{"email":"test2@mail.com"},"level":"\u001b[31merror\u001b[39m","timestamp":"2023-07-15 19:07:51"}
+{"level":"\u001b[31merror\u001b[39m","timestamp":"2023-07-15 19:26:04"}
+{"level":"\u001b[31merror\u001b[39m","timestamp":"2023-07-15 19:27:27"}
+{"level":"\u001b[31merror\u001b[39m","timestamp":"2023-07-15 19:28:56"}
+{"level":"\u001b[31merror\u001b[39m","timestamp":"2023-07-15 19:29:15"}
+{"level":"\u001b[31merror\u001b[39m","timestamp":"2023-07-15 19:30:12"}
+{"level":"\u001b[31merror\u001b[39m","timestamp":"2023-07-15 19:30:13"}
+{"level":"\u001b[31merror\u001b[39m","timestamp":"2023-07-15 19:30:20"}

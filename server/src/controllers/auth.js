@@ -1,7 +1,7 @@
 import { User } from "../db";
 import logger from "../logger";
-import { hashPassword } from "../utils/auth.utils";
-import { generateResetToken, verifyResetToken } from "../utils/token";
+import { comparePassword, hashPassword } from "../utils/auth.utils";
+import { generateResetToken, generateToken, verifyResetToken } from "../utils/token";
 import { validationResult } from "express-validator";
 
 export const signup = async (req, res, next) => {
@@ -27,6 +27,60 @@ export const signup = async (req, res, next) => {
       message: "User created successfully",
       success: true,
       data: createdUser,
+    });
+  } catch (error) {
+    logger.error(error);
+    return res.status(500).json({
+      message: error.message,
+      success: false,
+    });
+  }
+};
+
+export const login = async (req, res, next) => {
+  try {
+    // check for validation errors
+    const errors = validationResult(req);
+    if (!errors.isEmpty()) {
+      return res.status(400).json({
+        message: "Validation failed",
+        success: false,
+        data: errors.array(),
+      });
+    }
+    // validate this data
+    const { email, password } = req.body;
+    const user = await User.findOne({ email });
+    //check user
+    if (!user) {
+      return res.status(400).json({
+        message: "user doesn't exist",
+        success: false,
+        data: null,
+      });
+    }
+    const isMatch = await comparePassword(password, user.password);
+    if (!isMatch) {
+      return res.status(400).json({
+        message: "Invalid credentials",
+        success: false,
+        data: null,
+      });
+    }
+    // generate a token
+    const token = generateToken({
+      id: user._id,
+      email: user.email,
+      initials: user.initials,
+      fullName: user.fullName,
+      role:user.role,
+    });
+    return res.status(201).json({
+      message: "token created successfully",
+      success: true,
+      data: {
+        token,
+      },
     });
   } catch (error) {
     logger.error(error);
