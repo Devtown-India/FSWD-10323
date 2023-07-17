@@ -5,6 +5,8 @@ export const loginUser = (user) => {
     try {
         const response = await axios.post('/auth/login', user)
         const {data:responseData} = response
+        const {token} = responseData.data
+        axios.defaults.headers.common['Authorization'] = `${token}`
         dispatch({
             type: 'LOGIN_USER',
             payload: responseData.data
