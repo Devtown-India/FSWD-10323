@@ -1,14 +1,21 @@
 const initialState = {
-  token:null,
-  user:null,
-  loaded:false,
-}
+  token: null,
+  user: null,
+  loaded: false,
+};
 
 const authReducer = (state = initialState, action) => {
-  switch (action.type) {
+  const { payload, type } = action;
+  switch (type) {
+    case "LOGIN_USER":
+      return {
+        ...state,
+        ...payload,
+        loaded: true,
+      };
     default:
-      return state
+      return state;
   }
-}
+};
 
-export default authReducer
+export default authReducer;

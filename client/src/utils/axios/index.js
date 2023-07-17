@@ -18,6 +18,7 @@ instance.interceptors.request.use({
 
 instance.interceptors.response.use({
     success: (response) => {
+        console.log(response)
         return response.data;
     },
     error: (error) => {

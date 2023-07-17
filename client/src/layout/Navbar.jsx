@@ -1,6 +1,8 @@
+import { useSelector } from "react-redux";
 import { Link } from "react-router-dom";
 
 const Navbar = ({ changeView }) => {
+  const auth = useSelector((state) => state.auth);
   return (
     <nav
       style={{
@@ -71,19 +73,23 @@ const Navbar = ({ changeView }) => {
 
           <div className=" inset-y-0 right-0 flex items-center pr-2 sm:static sm:inset-auto sm:ml-6 sm:pr-0">
             <div className="ml-3 relative">
-              <div>
-                <button
-                  className="max-w-xs bg-gray-800 rounded-full flex items-center text-sm focus:outline-none focus:shadow-solid"
-                  id="user-menu"
-                  aria-label="User menu"
-                  aria-haspopup="true"
-                >
-                  <span className="sr-only">Open user menu</span>
-                  <span className="bg-yellow-500 rounded-full h-8 w-8 flex items-center justify-center">
-                    <span className="text-white font-medium">KG</span>
-                  </span>
-                </button>
-              </div>
+              {auth.loaded && (
+                <div>
+                  <button
+                    className="max-w-xs bg-gray-800 rounded-full flex items-center text-sm focus:outline-none focus:shadow-solid"
+                    id="user-menu"
+                    aria-label="User menu"
+                    aria-haspopup="true"
+                  >
+                    <span className="sr-only">Open user menu</span>
+                    <span className="bg-yellow-500 rounded-full h-8 w-8 flex items-center justify-center">
+                      <span className="text-white font-medium">
+                        {auth.user.initials}
+                      </span>
+                    </span>
+                  </button>
+                </div>
+              )}
             </div>
           </div>
         </div>

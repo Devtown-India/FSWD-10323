@@ -80,6 +80,12 @@ export const login = async (req, res, next) => {
       success: true,
       data: {
         token,
+        user:{
+          id: user._id,
+          email: user.email,
+          initials: user.initials,
+          role:user.role,
+        }
       },
     });
   } catch (error) {
