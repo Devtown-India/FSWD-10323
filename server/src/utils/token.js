@@ -16,7 +16,6 @@ export const verifyAuthToken = (token) => {
         return payload
     } catch (error) {
         console.log(error)
-        logger.log(error)
         return null
     }
 }

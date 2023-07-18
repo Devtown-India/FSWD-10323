@@ -10,7 +10,7 @@ export const validateToken = async (req, res, next) => {
     const {token} = req.params;
     const decoded = await verifyAuthToken(token);
     if(!decoded){
-      return res.status(400).json({
+      return res.status(401).json({
         message: "Invalid token",
         success: false,
         data: null,
