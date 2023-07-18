@@ -42,3 +42,10 @@ export const loadUser = () => {
     }
   };
 };
+
+export const logoutUser = () => {
+  localStorage.removeItem("token");
+  return {
+    type: "LOGOUT",
+  };
+}

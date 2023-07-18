@@ -2,6 +2,7 @@ import React from "react";
 import { useDispatch } from "react-redux";
 import { Link } from "react-router-dom";
 import { loginUser } from "../../redux/actions/auth";
+import withAuth from "../../hoc/withAuth";
 
 const Login = () => {
   const [email, setEmail] = React.useState("");
@@ -108,4 +109,4 @@ const Login = () => {
   );
 };
 
-export default Login;
+export default withAuth(Login);
