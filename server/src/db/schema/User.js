@@ -76,6 +76,7 @@ UserSchema.virtual('initials').get(function(){
 
 // middlewares
 UserSchema.pre('save',async function(next){
+    console.log('hasing password')
     if(!this.isModified('password')) return next()
     const hashedPassword = await hashPassword(this.password)
     this.password = hashedPassword

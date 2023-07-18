@@ -181,7 +181,10 @@ export const changePassword = async (req, res, next) => {
       });
     }
     const { email } = payload;
-    await User.findOneAndUpdate({ email }, { password });
+    const user = await User.findOne({ email });
+    user.password = password
+    await user.save()
+    // await User.findOneAndUpdate({ email }, { password });
 
     return res.status(200).json({
       message: "Password updated successfully",

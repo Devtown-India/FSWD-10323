@@ -44,3 +44,8 @@
 {"level":"\u001b[31merror\u001b[39m","timestamp":"2023-07-18 19:15:26"}
 {"level":"\u001b[31merror\u001b[39m","timestamp":"2023-07-18 19:15:57"}
 {"level":"\u001b[31merror\u001b[39m","timestamp":"2023-07-18 19:17:43"}
+{"level":"\u001b[31merror\u001b[39m","message":"\u001b[31minvalid token\u001b[39m","name":"JsonWebTokenError","timestamp":"2023-07-18 19:26:30"}
+{"level":"\u001b[31merror\u001b[39m","message":"\u001b[31minvalid token\u001b[39m","name":"JsonWebTokenError","timestamp":"2023-07-18 19:26:32"}
+{"level":"\u001b[31merror\u001b[39m","message":"\u001b[31minvalid token\u001b[39m","name":"JsonWebTokenError","timestamp":"2023-07-18 19:26:47"}
+{"level":"\u001b[31merror\u001b[39m","message":"\u001b[31minvalid token\u001b[39m","name":"JsonWebTokenError","timestamp":"2023-07-18 19:28:28"}
+{"level":"\u001b[31merror\u001b[39m","timestamp":"2023-07-18 19:37:05"}
