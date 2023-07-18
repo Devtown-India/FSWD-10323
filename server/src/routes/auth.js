@@ -5,6 +5,7 @@ import {
   changePassword,
   signup,
   login,
+  validateToken
 } from "../controllers/auth";
 import { User } from "../db";
 const router = Router();
@@ -34,6 +35,11 @@ router.post(
   "/login",
   body("email").isEmail().withMessage("Please enter a valid email."),
   login
+);
+
+router.get(
+  "/validate-token/:token",
+  validateToken
 );
 
 export default router;

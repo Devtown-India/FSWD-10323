@@ -13,6 +13,12 @@ const authReducer = (state = initialState, action) => {
         ...payload,
         loaded: true,
       };
+    case "LOAD_USER":
+      return {
+        ...state,
+        ...payload,
+        loaded: true,
+      };
     default:
       return state;
   }

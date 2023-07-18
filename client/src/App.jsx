@@ -9,14 +9,25 @@ import Login from "./components/auth/Login";
 import ForgotPassword from "./components/auth/ForgotPassword";
 import Signup from "./components/auth/Signup";
 import ResetPassword from "./components/auth/ResetPassword";
+import { Toaster } from "react-hot-toast";
+import { loadUser } from "./redux/actions/auth";
+import { useDispatch } from "react-redux";
 
 const App = () => {
+  const dispatch = useDispatch();
+
+  useEffect(() => {
+    // dispatch an action to load auth
+    dispatch(loadUser());
+  }, []);
+
   return (
     <div
       style={{
         height: "auto",
       }}
     >
+      <Toaster />
       <Navbar />
       <Routes>
         <Route path="/" element={<Gallery />} />

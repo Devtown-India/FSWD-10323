@@ -1,18 +1,45 @@
-import axios from '../../../utils/axios'
+import { toast } from "react-hot-toast";
+import axios from "../../../utils/axios";
 
 export const loginUser = (user) => {
- return async (dispatch) => {
+  return async (dispatch) => {
     try {
-        const response = await axios.post('/auth/login', user)
-        const {data:responseData} = response
-        const {token} = responseData.data
-        axios.defaults.headers.common['Authorization'] = `${token}`
-        dispatch({
-            type: 'LOGIN_USER',
-            payload: responseData.data
-        })
+      const response = await axios.post("/auth/login", user);
+      const { data: responseData } = response;
+      const { token } = responseData.data;
+      axios.defaults.headers.common["Authorization"] = `${token}`;
+      // store token in local storage
+      localStorage.setItem("token", token);
+      dispatch({
+        type: "LOGIN_USER",
+        payload: responseData.data,
+      });
+      toast.success("Login successful");
     } catch (error) {
-        console.log(error)
+      toast.error(error.response.data.message);
+      console.log(error);
     }
- }
-}
+  };
+};
+
+export const loadUser = () => {
+  return async (dispatch) => {
+    try {
+      const token = localStorage.getItem("token");
+      if (!token) return;
+      const response = await axios.get(`/auth/validate-token/${token}`);
+      const { data: responseData } = response;
+      console.log(responseData);
+      dispatch({
+        type: "LOAD_USER",
+        payload: {
+          token,
+          user: responseData.data,
+        },
+      });
+    } catch (error) {
+      toast.error(error.response.data.message);
+      console.log(error);
+    }
+  };
+};

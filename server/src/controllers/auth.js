@@ -1,8 +1,34 @@
 import { User } from "../db";
 import logger from "../logger";
 import { comparePassword, hashPassword } from "../utils/auth.utils";
-import { generateResetToken, generateToken, verifyResetToken } from "../utils/token";
+import { generateResetToken, generateToken, verifyAuthToken, verifyResetToken } from "../utils/token";
 import { validationResult } from "express-validator";
+
+export const validateToken = async (req, res, next) => {
+  try {
+    // check for validation errors
+    const {token} = req.params;
+    const decoded = await verifyAuthToken(token);
+    if(!decoded){
+      return res.status(400).json({
+        message: "Invalid token",
+        success: false,
+        data: null,
+      });
+    }
+    return res.status(201).json({
+      message: "token validated successfully",
+      success: true,
+      data: decoded,
+    });
+  } catch (error) {
+    logger.error(error);
+    return res.status(500).json({
+      message: error.message,
+      success: false,
+    });
+  }
+};
 
 export const signup = async (req, res, next) => {
   try {
