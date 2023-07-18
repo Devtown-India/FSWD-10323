@@ -139,7 +139,7 @@ export const forgotPassword = async (req, res, next) => {
     const token = generateResetToken({
       email,
     });
-    const resetPasswordLink = `http://localhost:8080/reset-password/${token}`;
+    const resetPasswordLink = `http://localhost:3000/reset-password/${token}`;
     // send the email
     return res.status(200).json({
       message: "Reset password link sent to email",
@@ -170,6 +170,7 @@ export const changePassword = async (req, res, next) => {
     }
     const { password } = req.body;
     const { token } = req.params;
+    console.log(token);
     // verify the token
     const payload = verifyResetToken(token);
     if (!payload) {

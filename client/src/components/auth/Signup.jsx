@@ -1,5 +1,6 @@
 import React from "react";
 import { Link } from "react-router-dom";
+import withAuth from "../../hoc/withAuth";
 
 const Signup = () => {
   const [email, setEmail] = React.useState("");
@@ -139,4 +140,4 @@ const Signup = () => {
   );
 };
 
-export default Signup;
+export default withAuth(Signup);

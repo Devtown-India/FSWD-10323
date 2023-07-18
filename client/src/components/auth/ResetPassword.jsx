@@ -1,13 +1,24 @@
 import React from "react";
-import { Link } from "react-router-dom";
+import { Link, useParams } from "react-router-dom";
+import withAuth from "../../hoc/withAuth";
+import { toast } from "react-hot-toast";
+import axios from "../../utils/axios";
 
 const ResetPassword = () => {
+  const { token } = useParams();
   const [confirmPassword, setConfirmPassword] = React.useState("");
   const [password, setPassword] = React.useState("");
 
   const handleSubmit = async (e) => {
     try {
       e.preventDefault();
+      if (password !== confirmPassword) {
+        return toast.error("Passwords do not match");
+      }
+      const response = await axios.post(`/auth/reset-password/:${token}`, {
+        password,
+      });
+      console.log(response.data);
       console.log({
         confirmPassword,
         password,
@@ -100,4 +111,4 @@ const ResetPassword = () => {
   );
 };
 
-export default ResetPassword;
+export default withAuth(ResetPassword);
