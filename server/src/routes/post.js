@@ -9,16 +9,7 @@ router.get("/:id", getPost);
 // protected endpoint
 router.post(
   "/",
-  body('userId').custom(val=>{
-    if(!val){
-      throw new Error('User id is required')
-    }
-    const user = User.findOne({_id:val})
-    if(!user){
-      throw new Error('User not found')
-    }
-    return true
-  }),
+  
   body("title")
     .isLength({ min: 3, max: 50 })
     .withMessage("Title must be between 3 and 50 characters"),

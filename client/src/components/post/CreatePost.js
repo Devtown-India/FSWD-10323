@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import { toast } from "react-hot-toast";
-import axios from "axios";
+import axios from "../../utils/axios";
 import privateRoute from "../../hoc/privateRoute";
 
 const CreatePost = () => {
@@ -26,14 +26,11 @@ const CreatePost = () => {
       e.preventDefault();
       if (!title || !description || !image)
         throw new Error("Please fill all the fields");
-
       const formData = new FormData();
       formData.append("file", image);
-      const { data } = await axios.post("https://api.upload.io/v2/accounts/FW25bXf/uploads/form_data", formData, {
-        headers:{
-          'Authorization': ''
-        }
-      })
+      formData.append("title", title);
+      formData.append("description", description);
+      const { data } = await axios.post("/post", formData, {});
       console.log(data)
 
     } catch (error) {
