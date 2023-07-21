@@ -10,7 +10,9 @@ router.get("/:id", getPost);
 // protected endpoint
 router.post(
   "/",
+  
   upload.single('image'),
+  body("title").notEmpty().withMessage("Title is required"),
   createPost
 ),
   body("email").isEmail().withMessage("Email must be valid"),
