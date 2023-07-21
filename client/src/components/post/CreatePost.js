@@ -1,6 +1,7 @@
 import React, { useState } from "react";
 import { toast } from "react-hot-toast";
 import axios from 'axios'
+import privateRoute from "../../hoc/privateRoute";
 
 const CreatePost = () => {
   const [imagePreview, setImagePreview] = useState(null);
@@ -169,4 +170,4 @@ const CreatePost = () => {
   );
 };
 
-export default CreatePost;
+export default privateRoute(CreatePost);
