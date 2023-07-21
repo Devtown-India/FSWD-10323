@@ -14,7 +14,8 @@ const CreatePost = () => {
     console.log(file)
     const filereader = new FileReader();
     filereader.onload = () => {
-      console.log(filereader.result)
+      setImagePreview(filereader.result);
+      setImage(file);
     }
     filereader.readAsDataURL(file)
     // filereader
@@ -25,6 +26,16 @@ const CreatePost = () => {
       e.preventDefault();
       if (!title || !description || !image)
         throw new Error("Please fill all the fields");
+
+      const formData = new FormData();
+      formData.append("file", image);
+      const { data } = await axios.post("https://api.upload.io/v2/accounts/FW25bXf/uploads/form_data", formData, {
+        headers:{
+          'Authorization': ''
+        }
+      })
+      console.log(data)
+
     } catch (error) {
       toast.error(error.message);
       console.log(error);
