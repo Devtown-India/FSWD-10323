@@ -54,26 +54,13 @@ export const getPost = async (req, res) => {
 
 export const createPost = async (req, res) => {
   try {
-    const errors = validationResult(req);
-    if (!errors.isEmpty()) {
-      console.log(errors)
-      return res.status(400).json({
-        message: "Validation failed",
-        success: false,
-        errors: errors.array(),
-      });
-    }
-    const { userId, title, description, image } = req.body;
-    const post = await Post.create({
-      title,
-      description,
-      image,
-      user: userId,
-    });
+    console.log(req.file)
+    const { title, description } = req.body;
+    console.log(title, description)
     return res.status(200).json({
       message: "Post created successfully",
       success: true,
-      data: post,
+      // data: post,
     });
   } catch (error) {
     logger.error(error);

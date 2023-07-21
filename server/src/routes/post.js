@@ -2,6 +2,7 @@ import { Router } from "express";
 import { createPost, deletePost, getPost, getPosts } from "../controllers/post";
 import { body, query, param } from "express-validator";
 import { User } from "../db";
+import  upload from "../utils/uploader";
 const router = Router();
 
 router.get("/", getPosts);
@@ -9,11 +10,7 @@ router.get("/:id", getPost);
 // protected endpoint
 router.post(
   "/",
-  
-  body("title")
-    .isLength({ min: 3, max: 50 })
-    .withMessage("Title must be between 3 and 50 characters"),
-  body("image").isURL().withMessage("Image must be a valid URL"),
+  upload.single("file"),
   createPost
 ),
   body("email").isEmail().withMessage("Email must be valid"),
