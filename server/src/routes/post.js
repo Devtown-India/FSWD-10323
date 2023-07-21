@@ -10,7 +10,7 @@ router.get("/:id", getPost);
 // protected endpoint
 router.post(
   "/",
-  upload.single("file"),
+  upload.single('image'),
   createPost
 ),
   body("email").isEmail().withMessage("Email must be valid"),

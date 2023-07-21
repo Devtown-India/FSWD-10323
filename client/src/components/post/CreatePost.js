@@ -27,7 +27,7 @@ const CreatePost = () => {
       if (!title || !description || !image)
         throw new Error("Please fill all the fields");
       const formData = new FormData();
-      formData.append("file", image);
+      formData.append("image", image);
       formData.append("title", title);
       formData.append("description", description);
       const { data } = await axios.post("/post", formData, {});
