@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import { toast } from "react-hot-toast";
-import axios from 'axios'
+import axios from "axios";
 import privateRoute from "../../hoc/privateRoute";
 
 const CreatePost = () => {
@@ -10,6 +10,14 @@ const CreatePost = () => {
   const [image, setImage] = useState(null);
 
   const handlePreview = (e) => {
+    const file = e.target.files[0];
+    console.log(file)
+    const filereader = new FileReader();
+    filereader.onload = () => {
+      console.log(filereader.result)
+    }
+    filereader.readAsDataURL(file)
+    // filereader
   };
 
   const handleSubmit = async (e) => {
@@ -97,36 +105,28 @@ const CreatePost = () => {
                   Photo
                 </label>
                 <div className="mt-2 flex items-center gap-x-3">
-                  {imagePreview ? (
-                    <img
-                      src={imagePreview}
-                      alt="Preview"
-                      className="h-12 w-12"
+                  <svg
+                    xmlns="http://www.w3.org/2000/svg"
+                    width="25px"
+                    height="25px"
+                    viewBox="0 0 24 24"
+                    fill="none"
+                  >
+                    <path
+                      d="m8 8 4-4 4 4"
+                      stroke="#ffbf00"
+                      stroke-width="1.5"
+                      stroke-linecap="round"
+                      stroke-linejoin="round"
                     />
-                  ) : (
-                    <svg
-                      xmlns="http://www.w3.org/2000/svg"
-                      width="25px"
-                      height="25px"
-                      viewBox="0 0 24 24"
-                      fill="none"
-                    >
-                      <path
-                        d="m8 8 4-4 4 4"
-                        stroke="#ffbf00"
-                        stroke-width="1.5"
-                        stroke-linecap="round"
-                        stroke-linejoin="round"
-                      />
-                      <path
-                        d="M12 4v12M19 17v.6c0 1.33-1.07 2.4-2.4 2.4H7.4C6.07 20 5 18.93 5 17.6V17"
-                        stroke="#ffbf00"
-                        stroke-width="1.5"
-                        stroke-miterlimit="10"
-                        stroke-linecap="round"
-                      />
-                    </svg>
-                  )}
+                    <path
+                      d="M12 4v12M19 17v.6c0 1.33-1.07 2.4-2.4 2.4H7.4C6.07 20 5 18.93 5 17.6V17"
+                      stroke="#ffbf00"
+                      stroke-width="1.5"
+                      stroke-miterlimit="10"
+                      stroke-linecap="round"
+                    />
+                  </svg>
                   <input
                     type="file"
                     name="photo"
@@ -144,10 +144,6 @@ const CreatePost = () => {
                 </div>
               </div>
             )}
-            {/*            
-            {imagePreview && (
-              
-            )} */}
           </div>
         </div>
       </div>
