@@ -12,6 +12,7 @@ import ResetPassword from "./components/auth/ResetPassword";
 import { Toaster } from "react-hot-toast";
 import { loadUser } from "./redux/actions/auth";
 import { useDispatch } from "react-redux";
+import CreatePost from "./components/post/CreatePost";
 
 const App = () => {
   const dispatch = useDispatch();
@@ -31,6 +32,7 @@ const App = () => {
       <Navbar />
       <Routes>
         <Route path="/" element={<Gallery />} />
+        <Route path="/createPost" element={<CreatePost />} />
         <Route path="/post/:id" element={<PostView />} />
         <Route path="/login" element={<Login />} />
         <Route path="/signup" element={<Signup />} />

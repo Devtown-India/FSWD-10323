@@ -16,16 +16,20 @@ const Navbar = ({ changeView }) => {
       <div className="max-w-7xl mx-auto px-2 sm:px-6 lg:px-8">
         <div className="relative flex items-center justify-between h-16">
           <div className="inset-y-0 left-0 flex items-center">
-            <img
-              className="block lg:hidden h-10 w-auto"
-              src="https://www.svgrepo.com/show/384978/donut-doughnut-sweet-dessert-food-fastfood.svg"
-              alt="Logo"
-            />
-            <img
-              className="hidden lg:block h-10 w-auto"
-              src="https://www.svgrepo.com/show/384978/donut-doughnut-sweet-dessert-food-fastfood.svg"
-              alt="Logo"
-            />
+            <Link to="/">
+              <img
+                className="block lg:hidden h-10 w-auto"
+                src="https://www.svgrepo.com/show/384978/donut-doughnut-sweet-dessert-food-fastfood.svg"
+                alt="Logo"
+              />
+            </Link>
+            <Link to="/">
+              <img
+                className="hidden lg:block h-10 w-auto"
+                src="https://www.svgrepo.com/show/384978/donut-doughnut-sweet-dessert-food-fastfood.svg"
+                alt="Logo"
+              />
+            </Link>
           </div>
           <div className="flex w-2/3 items-center">
             <label htmlFor="simple-search" className="sr-only">
@@ -76,8 +80,14 @@ const Navbar = ({ changeView }) => {
 
           <div className=" inset-y-0 right-0 flex items-center pr-2 sm:static sm:inset-auto sm:ml-6 sm:pr-0">
             <div className="ml-3 relative">
-              {auth.loaded && auth.token && (
+              {auth.loaded && auth.token ? (
                 <div className="flex justify-center items-center">
+                  <Link
+                    to="/createPost"
+                    className="text-gray-300 hover:bg-gray-700 hover:text-white px-3 py-2 rounded-md text-sm font-medium mr-3"
+                  >
+                    New +
+                  </Link>
                   <div>
                     <button
                       className="max-w-xs bg-gray-800 rounded-full flex items-center text-sm focus:outline-none focus:shadow-solid"
@@ -124,6 +134,21 @@ const Navbar = ({ changeView }) => {
                       strokeLinejoin="round"
                     />
                   </svg>
+                </div>
+              ) : (
+                <div className="flex justify-center items-center">
+                  <Link
+                    to="/login"
+                    className="text-gray-300 hover:bg-gray-700 hover:text-white px-3 py-2 rounded-md text-sm font-medium"
+                  >
+                    Login
+                  </Link>
+                  <Link
+                    to="/signup"
+                    className="text-gray-300 hover:bg-gray-700 hover:text-white px-3 py-2 rounded-md text-sm font-medium"
+                  >
+                    Register
+                  </Link>
                 </div>
               )}
             </div>
