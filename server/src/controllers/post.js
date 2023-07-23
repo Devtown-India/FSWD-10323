@@ -5,22 +5,23 @@ import axios from "axios";
 
 export const getPosts = async (req, res) => {
   try {
-    const { pageNumber = 1 } = req.query;
+    const { _page = 1, _limit=20 } = req.query;
     // page size = 10
-    const offset = (pageNumber - 1) * 10;
+    const offset = (_page - 1) * 10;
     const posts = await Post.find()
-      .limit(10)
+      .limit(_limit)
       .skip(offset)
       .sort({ createdAt: -1 })
-      .populate("user", "firstName lastName email profilePicture")
+      .populate("user")
+      // .select("title description image createdAt user comments id")
       //   .populate("comments", "commentText user");
-      .populate({
-        path: "comments",
-        populate: {
-          path: "user",
-          select: "firstName lastName email profilePicture",
-        },
-      });
+      // .populate({
+      //   path: "comments",
+      //   populate: {
+      //     path: "user",
+      //     select: "firstName lastName email profilePicture",
+      //   },
+      // });
     return res.status(200).json({
       message: "Posts fetched successfully",
       success: true,
@@ -64,11 +65,7 @@ export const createPost = async (req, res) => {
       });
     }
     const file = req.file;
-    console.log(file);
-    // upload the file to upload.io
-    console.log(
-      `https://api.upload.io/v2/accounts/${process.env.UPLOAD_IO_ACCOUNT_ID}/uploads/binary`
-    );
+    
     const uploadIoResponse = await axios.post(
       `https://api.upload.io/v2/accounts/${process.env.UPLOAD_IO_ACCOUNT_ID}/uploads/binary`,
       file.buffer,
@@ -80,22 +77,17 @@ export const createPost = async (req, res) => {
     );
     const {fileUrl} = uploadIoResponse.data;
     const { title, description } = req.body;
-    // const post = await Post.create({
-    //   title,
-    //   description,
-    //   image: fileUrl,
-    //   user: 'user from req.user'
-    // });
-    console.log({
+    const post = await Post.create({
       title,
       description,
       image: fileUrl,
-      user: 'user from req.user'
-    })
+      user: req.user.id
+    });
+   
     return res.status(200).json({
       message: "Post created successfully",
       success: true,
-      // data: post,
+      data: post,
     });
   } catch (error) {
     logger.error(error);

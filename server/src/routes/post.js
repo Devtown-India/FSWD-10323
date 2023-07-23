@@ -3,6 +3,7 @@ import { createPost, deletePost, getPost, getPosts } from "../controllers/post";
 import { body, query, param } from "express-validator";
 import { User } from "../db";
 import  upload from "../utils/uploader";
+import { isAuthenticated } from "../middlewares/auth";
 const router = Router();
 
 router.get("/", getPosts);
@@ -10,7 +11,7 @@ router.get("/:id", getPost);
 // protected endpoint
 router.post(
   "/",
-  
+  isAuthenticated,
   upload.single('image'),
   body("title").notEmpty().withMessage("Title is required"),
   createPost

@@ -28,6 +28,7 @@ export const loadUser = () => {
       const token = localStorage.getItem("token");
       if (!token) return;
       const response = await axios.get(`/auth/validate-token/${token}`);
+      axios.defaults.headers.common["Authorization"] = `${token}`;
       const responseData  = response.data;
       dispatch({
         type: "LOAD_USER",
