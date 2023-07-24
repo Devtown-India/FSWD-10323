@@ -39,7 +39,7 @@ export const getPosts = async (req, res) => {
 export const getPost = async (req, res) => {
   try {
     const id = req.params.id;
-    const post = await Post.findOne({ _id: id });
+    const post = await Post.findOne({ _id: id }).select('title description image');
     return res.status(200).json({
       message: "Post fetched successfully",
       success: true,
@@ -104,6 +104,43 @@ export const deletePost = async (req, res) => {
   try {
     const { id } = req.params;
     const post = await Post.findByIdAndDelete(id);
+    return res.status(200).json({
+      message: "Post created successfully",
+      success: true,
+      data: post,
+    });
+  } catch (error) {
+    logger.error(error);
+    return res.status(500).json({
+      message: error.message,
+      success: false,
+    });
+  }
+};
+
+export const editPost = async (req, res) => {
+  // only the owner should be able to delete a post or a moderator
+  try {
+    const { id } = req.params;
+    const post = await Post.findOne({_id:id});
+    if(!post) {
+      return res.status(404).json({
+        message: "Post not found",
+        success: false,
+      });
+    }
+    if( post.user._id.toString()!==req.user.id) {
+      // if post doesn't belong to the user don't allow him/her to edit it
+      return res.status(401).json({
+        message: "You are not authorized to edit this post",
+        success: false,
+      });
+    }
+    const { title, description } = req.body;
+    await Post.findByIdAndUpdate(id, {
+      ...(title && { title }),
+      ...(description && { description }),
+    })
     return res.status(200).json({
       message: "Post created successfully",
       success: true,
