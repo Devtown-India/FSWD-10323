@@ -54,6 +54,7 @@ export const getPost = async (req, res) => {
   }
 };
 
+
 export const createPost = async (req, res) => {
   try {
     const errors = validationResult(req);
