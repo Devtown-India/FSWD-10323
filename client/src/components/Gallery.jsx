@@ -21,8 +21,8 @@ const Gallery = () => {
     const timeout = setTimeout(() => {
       // reset the page becuase we're searching and we want only the matches
       setPosts([]);
-      //
       setPage(1);
+      setDone(false);
       fetchData();
     }, 400);
 
@@ -67,8 +67,6 @@ const Gallery = () => {
       observer.current.observe(lastImageRef.current);
     }
   }, [posts, loading, done]);
-
-  console.log(user);
 
   return (
     <>
