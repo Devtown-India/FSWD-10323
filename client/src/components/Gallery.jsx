@@ -1,22 +1,41 @@
+import { useContext } from "react";
 import axios from "../utils/axios";
 import { useEffect, useRef, useState } from "react";
 import { useSelector } from "react-redux";
 import Masonry, { ResponsiveMasonry } from "react-responsive-masonry";
 import { Link } from "react-router-dom";
+import { SearchContext } from "../contexts/searchContext";
 
 const Gallery = () => {
   const [page, setPage] = useState(1);
   const [posts, setPosts] = useState([]);
   const [loading, setLoading] = useState(false);
+  const { search } = useContext(SearchContext);
   const [done, setDone] = useState(false);
   const lastImageRef = useRef(null);
   const observer = useRef(null);
   const user = useSelector((state) => state.auth.user);
   const limit = 20;
+
+  useEffect(() => {
+    const timeout = setTimeout(() => {
+      // reset the page becuase we're searching and we want only the matches
+      setPosts([]);
+      //
+      setPage(1);
+      fetchData();
+    }, 400);
+
+    return () => clearTimeout(timeout);
+  }, [search]);
+
   const fetchData = async () => {
     try {
       setLoading(true);
-      const { data } = await axios.get(`/post?_page=${page}&_limit=${limit}`);
+      const { data } = await axios.get(
+        `/post?_page=${page}&_limit=${limit}&_search=${search}`
+      );
+
       if (data.length === 0) {
         setDone(true);
       } else {

@@ -5,23 +5,28 @@ import axios from "axios";
 
 export const getPosts = async (req, res) => {
   try {
-    const { _page = 1, _limit=20 } = req.query;
+    const { _page = 1, _limit=20,_search } = req.query;
     // page size = 10
+    if(_search && _search.length>0) {
+      const posts = await Post.find({title: {$regex: _search, $options: 'i'}})
+      // await Post.find({$text: {$search: _search}})
+      .limit(_limit)
+      .skip((_page - 1) * 10)
+      .sort({ createdAt: -1 })
+      .populate("user")
+      return res.status(200).json({
+        message: "Posts fetched successfully",
+        success: true,
+        data: posts,
+      });
+    }
     const offset = (_page - 1) * 10;
     const posts = await Post.find()
       .limit(_limit)
       .skip(offset)
       .sort({ createdAt: -1 })
       .populate("user")
-      // .select("title description image createdAt user comments id")
-      //   .populate("comments", "commentText user");
-      // .populate({
-      //   path: "comments",
-      //   populate: {
-      //     path: "user",
-      //     select: "firstName lastName email profilePicture",
-      //   },
-      // });
+    
     return res.status(200).json({
       message: "Posts fetched successfully",
       success: true,

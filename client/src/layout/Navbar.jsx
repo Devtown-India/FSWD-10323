@@ -1,11 +1,18 @@
 import { useDispatch, useSelector } from "react-redux";
 import { Link } from "react-router-dom";
 import { logoutUser } from "../redux/actions/auth";
+import { useState } from "react";
+import { useEffect } from "react";
+import axios from "../utils/axios";
+import { useContext } from "react";
+import { SearchContext } from "../contexts/searchContext";
 
 const Navbar = ({ changeView }) => {
   const auth = useSelector((state) => state.auth);
   const dispatch = useDispatch();
   const handleLogout = () => dispatch(logoutUser());
+  const { setSearch } = useContext(SearchContext);
+
   return (
     <nav
       style={{
@@ -57,6 +64,7 @@ const Navbar = ({ changeView }) => {
                 style={{
                   borderBottom: "1px solid #ffbf00",
                 }}
+                onChange={(e) => setSearch(e.target.value)}
                 type="text"
                 id="simple-search"
                 className="
